@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
+import { MaterialModule } from '../../material.module';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [],
+  imports: [MaterialModule],
   templateUrl: './dashboard.html',
-  styleUrl: './dashboard.scss'
+  styleUrl: './dashboard.scss',
 })
-export class Dashboard {
-
-}
+export class Dashboard {}
