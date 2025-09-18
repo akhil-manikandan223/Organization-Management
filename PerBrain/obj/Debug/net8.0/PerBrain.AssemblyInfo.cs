@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PerBrain")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+196c87b74f293849c6bcebce8b1f7031bbde4531")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+81329d2784b4bef43ec2188b6336d52082047d19")]
 [assembly: System.Reflection.AssemblyProductAttribute("PerBrain")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PerBrain")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
