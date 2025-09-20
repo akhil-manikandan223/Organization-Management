@@ -4,6 +4,7 @@ import { Subscribers } from '../home/dashboard/subscribers/subscribers';
 import { Views } from '../home/dashboard/views/views';
 import { WatchTime } from '../home/dashboard/watch-time/watch-time';
 import { Revenue } from '../home/dashboard/revenue/revenue';
+import { Metrics } from '../reports-analytics/metrics/metrics';
 
 @Injectable()
 export class DashboardWidget {
@@ -44,6 +45,13 @@ export class DashboardWidget {
       backgroundColor: '#003f5c',
       color: 'whitesmoke',
     },
+    {
+      id: 5,
+      label: 'Analytics',
+      content: Metrics,
+      rows: 2,
+      columns: 2,
+    },
   ]);
 
   addedWidgets = signal<Widgets[]>([]);
@@ -67,6 +75,7 @@ export class DashboardWidget {
           widget.content = content;
         }
       });
+      this.addedWidgets.set(widgets as Widgets[]);
     }
   }
 
