@@ -11,23 +11,7 @@
   </div>
 </div>
 <mat-nav-list>
-  @for (item of menuItems(); track item) {
-  <a
-    class="menu-item"
-    mat-list-item
-    [routerLink]="item.route"
-    #rla="routerLinkActive"
-    routerLinkActive="selected-menu-item"
-    [activated]="rla.isActive"
-  >
-    <mat-icon
-      matListItemIcon
-      [fontSet]="rla.isActive ? 'material-icons' : 'material-icons-outlined'"
-      >{{ item.icon }}</mat-icon
-    >
-    @if (!sideNavCollapsed()) {
-    <span matListItemTitle>{{ item.label }}</span>
-    }
-  </a>
+  @for (item of menuItems(); track item.label) {
+  <app-menu-item [item]="item" [collapsed]="sideNavCollapsed()" />
   }
 </mat-nav-list>

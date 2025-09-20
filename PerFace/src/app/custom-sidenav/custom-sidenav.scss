@@ -2,6 +2,12 @@
   transition: all 500ms ease-in-out;
 }
 
+:host ::ng-deep mat-nav-list,
+:host ::ng-deep .mat-mdc-nav-list,
+:host ::ng-deep .mat-mdc-nav-list .mat-mdc-list-item {
+  border-radius: 0 !important;
+}
+
 .sidenav-header {
   padding-top: 24px;
   text-align: center;
@@ -34,14 +40,4 @@
   overflow: hidden;
   margin: 0 !important;
   padding: 0 !important;
-}
-
-.menu-item {
-  border-left: 5px solid;
-  border-left-color: rgba(0, 0, 0, 0);
-}
-
-.selected-menu-item {
-  border-left-color: blue;
-  background: rgba(0, 0, 0, 0.5);
 }
