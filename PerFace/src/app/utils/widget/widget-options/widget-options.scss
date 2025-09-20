@@ -1,0 +1,51 @@
+:host {
+  position: absolute;
+  z-index: 2;
+  background: whitesmoke;
+  color: black;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  --mat-button-toggle-height: 16px;
+
+  > div {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+}
+
+:host .mat-button-toggle-appearance-standard .mat-button-toggle-label-content {
+  padding: 0 12px;
+  line-height: var(--mat-button-toggle-height);
+  height: var(--mat-button-toggle-height);
+}
+
+.close-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.move-forward-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: -1px;
+}
+
+.move-backward-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: -1px;
+}
