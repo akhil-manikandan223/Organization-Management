@@ -6,6 +6,7 @@
   #rla="routerLinkActive"
   routerLinkActive="selected-menu-item"
   [activated]="rla.isActive"
+  [style.--mat-list-list-item-leading-icon-start-space]="indentation()"
 >
   <mat-icon
     matListItemIcon
@@ -25,8 +26,8 @@
   }
 </a>
 
-@if (item().subItems && nestedMenuOpen()) {
-<div>
+@if (item().subItems) {
+<div class="submenu-container" [class.open]="nestedMenuOpen()">
   @for (subItem of item().subItems; track subItem.label) {
   <app-menu-item
     [item]="subItem"
@@ -36,3 +37,15 @@
   }
 </div>
 }
+
+<!-- @if (item().subItems && nestedMenuOpen()) {
+<div>
+  @for (subItem of item().subItems; track subItem.label) {
+  <app-menu-item
+    [item]="subItem"
+    [collapsed]="collapsed()"
+    [routeHistory]="routeHistory() + '/' + item().route"
+  />
+  }
+</div>
+} -->

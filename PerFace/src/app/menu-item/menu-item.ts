@@ -1,4 +1,4 @@
-import { Component, effect, input, signal } from '@angular/core';
+import { Component, computed, effect, input, signal } from '@angular/core';
 import { MaterialModule } from '../material.module';
 import { RouterModule } from '@angular/router';
 import { MenuItem } from '../custom-sidenav/custom-sidenav';
@@ -26,7 +26,14 @@ export class MenuItemComponent {
   collapsed = input(false);
   routeHistory = input('');
   nestedMenuOpen = signal(false);
-  logRoutes = effect(() => console.log(this.routeHistory()));
+
+  level = computed(() => this.routeHistory().split('/').length - 1);
+
+  indentation = computed(() =>
+    this.collapsed() ? '16px' : `${16 + this.level() * 16}px`
+  );
+
+  logRoutes = effect(() => console.log(this.routeHistory(), this.level()));
 
   toggleNested() {
     if (!this.item().subItems) return;
