@@ -80,17 +80,17 @@ export class CustomSidenav {
     {
       icon: 'folder',
       label: 'Projects',
-      route: 'projects',
+      route: 'task-management/projects',
     },
     {
       icon: 'assignment',
       label: 'Tasks',
-      route: 'tasks',
+      route: 'task-management/tasks',
     },
     {
       icon: 'timer',
       label: 'Time Tracking',
-      route: 'tracking',
+      route: 'task-management/tracking',
     },
     //   ],
     // },
