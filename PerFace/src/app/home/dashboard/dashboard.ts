@@ -1,7 +1,14 @@
-import { Component, inject } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  inject,
+  OnInit,
+  viewChild,
+} from '@angular/core';
 import { MaterialModule } from '../../material.module';
 import { Widget } from '../../utils/widget/widget';
 import { DashboardWidget } from '../../services/dashboard-widget';
+import { wrapGrid } from 'animate-css-grid';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,6 +17,12 @@ import { DashboardWidget } from '../../services/dashboard-widget';
   styleUrl: './dashboard.scss',
   providers: [DashboardWidget],
 })
-export class Dashboard {
+export class Dashboard implements OnInit {
   store = inject(DashboardWidget);
+
+  dashboard = viewChild.required<ElementRef>('dashboard');
+
+  ngOnInit() {
+    wrapGrid(this.dashboard().nativeElement, { duration: 300 });
+  }
 }
