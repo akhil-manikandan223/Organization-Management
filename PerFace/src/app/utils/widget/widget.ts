@@ -1,12 +1,12 @@
 import { Component, HostBinding, input, signal } from '@angular/core';
 import { Widgets } from '../../models/dashboard';
-import { NgComponentOutlet } from '@angular/common';
+import { CommonModule, NgComponentOutlet } from '@angular/common';
 import { MaterialModule } from '../../material.module';
 import { WidgetOptions } from './widget-options/widget-options';
 
 @Component({
   selector: 'app-widget',
-  imports: [NgComponentOutlet, MaterialModule, WidgetOptions],
+  imports: [NgComponentOutlet, MaterialModule, WidgetOptions, CommonModule],
   templateUrl: './widget.html',
   styleUrl: './widget.scss',
 })

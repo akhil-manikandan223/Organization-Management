@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
+import { MaterialModule } from '../../../material.module';
 
 @Component({
   selector: 'app-views',
-  imports: [],
+  imports: [MaterialModule],
   templateUrl: './views.html',
-  styleUrl: './views.scss'
+  styleUrl: './views.scss',
 })
-export class Views {
-
-}
+export class Views {}

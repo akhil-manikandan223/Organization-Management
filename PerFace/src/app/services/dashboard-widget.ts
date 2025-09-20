@@ -2,6 +2,8 @@ import { computed, Injectable, signal } from '@angular/core';
 import { Widgets } from '../models/dashboard';
 import { Subscribers } from '../home/dashboard/subscribers/subscribers';
 import { Views } from '../home/dashboard/views/views';
+import { WatchTime } from '../home/dashboard/watch-time/watch-time';
+import { Revenue } from '../home/dashboard/revenue/revenue';
 
 @Injectable()
 export class DashboardWidget {
@@ -10,11 +12,37 @@ export class DashboardWidget {
       id: 1,
       label: 'Subscribers',
       content: Subscribers,
+      rows: 1,
+      columns: 1,
+      backgroundColor: '#003f5c',
+      color: 'whitesmoke',
     },
     {
       id: 2,
       label: 'Views',
       content: Views,
+      rows: 1,
+      columns: 1,
+      backgroundColor: '#003f5c',
+      color: 'whitesmoke',
+    },
+    {
+      id: 3,
+      label: 'WatchTime',
+      content: WatchTime,
+      rows: 1,
+      columns: 1,
+      backgroundColor: '#003f5c',
+      color: 'whitesmoke',
+    },
+    {
+      id: 4,
+      label: 'Revenue',
+      content: Revenue,
+      rows: 1,
+      columns: 1,
+      backgroundColor: '#003f5c',
+      color: 'whitesmoke',
     },
   ]);
 
@@ -23,11 +51,37 @@ export class DashboardWidget {
       id: 1,
       label: 'Subscribers',
       content: Subscribers,
+      rows: 1,
+      columns: 1,
+      backgroundColor: '#003f5c',
+      color: 'whitesmoke',
     },
     {
       id: 2,
       label: 'Views',
       content: Views,
+      rows: 1,
+      columns: 1,
+      backgroundColor: '#003f5c',
+      color: 'whitesmoke',
+    },
+    {
+      id: 3,
+      label: 'WatchTime',
+      content: WatchTime,
+      rows: 1,
+      columns: 1,
+      backgroundColor: '#003f5c',
+      color: 'whitesmoke',
+    },
+    {
+      id: 4,
+      label: 'Revenue',
+      content: Revenue,
+      rows: 1,
+      columns: 1,
+      backgroundColor: '#003f5c',
+      color: 'whitesmoke',
     },
   ]);
 
@@ -77,5 +131,9 @@ export class DashboardWidget {
     ];
 
     this.addedWidgets.set(newWidgets);
+  }
+
+  removeWidget(id: number) {
+    this.addedWidgets.set(this.addedWidgets().filter((w) => w.id !== id));
   }
 }

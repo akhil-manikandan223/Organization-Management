@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { MaterialModule } from '../../../material.module';
 
 @Component({
-  selector: 'app-subscribers',
+  selector: 'app-revenue',
   imports: [MaterialModule],
-  templateUrl: './subscribers.html',
-  styleUrl: './subscribers.scss',
+  templateUrl: './revenue.html',
+  styleUrl: './revenue.scss',
 })
-export class Subscribers {}
+export class Revenue {}
