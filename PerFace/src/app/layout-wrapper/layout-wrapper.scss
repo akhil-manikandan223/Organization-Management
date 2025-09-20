@@ -41,3 +41,11 @@ mat-sidenav-content {
   height: 40px;
   margin-left: 16px;
 }
+
+.toolbar-spacer {
+  flex: 1 1 auto;
+}
+
+mat-icon-button {
+  margin-left: 12px;
+}

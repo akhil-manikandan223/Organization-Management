@@ -1,4 +1,4 @@
-import { Component, input, signal } from '@angular/core';
+import { Component, effect, input, signal } from '@angular/core';
 import { MaterialModule } from '../material.module';
 import { RouterModule } from '@angular/router';
 import { MenuItem } from '../custom-sidenav/custom-sidenav';
@@ -9,12 +9,13 @@ import { trigger, transition, style, animate } from '@angular/animations';
   imports: [MaterialModule, RouterModule],
   animations: [
     trigger('expandeContractMenu', [
-      transition(':enter', [style({ opacity: 0, height: 0 }),
-      animate('500ms ease-in-out', style({opacity: 1, height: '*'}))
+      transition(':enter', [
+        style({ opacity: 0, height: 0 }),
+        animate('500ms ease-in-out', style({ opacity: 1, height: '*' })),
       ]),
       transition(':leave', [
-        animate('500ms ease-in-out', style({opacity: 0, height: 0 }))
-      ])
+        animate('500ms ease-in-out', style({ opacity: 0, height: 0 })),
+      ]),
     ]),
   ],
   templateUrl: './menu-item.html',
@@ -23,7 +24,9 @@ import { trigger, transition, style, animate } from '@angular/animations';
 export class MenuItemComponent {
   item = input.required<MenuItem>();
   collapsed = input(false);
+  routeHistory = input('');
   nestedMenuOpen = signal(false);
+  logRoutes = effect(() => console.log(this.routeHistory()));
 
   toggleNested() {
     if (!this.item().subItems) return;
