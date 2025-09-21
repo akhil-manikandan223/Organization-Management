@@ -3,10 +3,18 @@ import { Widgets } from '../../models/dashboard';
 import { CommonModule, NgComponentOutlet } from '@angular/common';
 import { MaterialModule } from '../../material.module';
 import { WidgetOptions } from './widget-options/widget-options';
+import {CdkDrag, CdkDragPlaceholder} from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-widget',
-  imports: [NgComponentOutlet, MaterialModule, WidgetOptions, CommonModule],
+  imports: [
+    NgComponentOutlet,
+    MaterialModule,
+    WidgetOptions,
+    CommonModule,
+    CdkDrag,
+    CdkDragPlaceholder,
+  ],
   templateUrl: './widget.html',
   styleUrl: './widget.scss',
 })

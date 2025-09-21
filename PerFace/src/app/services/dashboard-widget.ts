@@ -126,6 +126,26 @@ export class DashboardWidget {
     this.addedWidgets.set(this.addedWidgets().filter((w) => w.id !== id));
   }
 
+  updateWidgetPosition(sourceWidgetId: number, targetWidgetId: number) {
+    const sourceIndex = this.addedWidgets().findIndex(
+      (w) => w.id === sourceWidgetId
+    );
+
+    if (sourceIndex === -1) return;
+
+    const newWidgets = [...this.addedWidgets()];
+    const sourceWidget = newWidgets.splice(sourceIndex, 1)[0];
+
+    const targetIndex = newWidgets.findIndex((w) => w.id === targetWidgetId);
+    if (targetIndex === -1) return;
+
+    const insertAt =
+      targetIndex === sourceIndex ? targetIndex + 1 : targetIndex;
+
+    newWidgets.splice(insertAt, 0, sourceWidget);
+    this.addedWidgets.set(newWidgets);
+  }
+
   saveWidgets = effect(() => {
     const widgetsWithoutContent: Partial<Widgets>[] = this.addedWidgets().map(
       (w) => ({ ...w })

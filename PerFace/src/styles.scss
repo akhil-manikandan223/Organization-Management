@@ -1,5 +1,6 @@
 // custom components at https://material.angular.dev/guide/theming
 @use "@angular/material" as mat;
+@include mat.core();
 
 html {
   @include mat.theme(
@@ -39,4 +40,10 @@ body {
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.cdk-drop-list-dragging {
+  opacity: 0.5;
+  padding-left: 8px;
+  border-left: 5px solid #000;
 }
