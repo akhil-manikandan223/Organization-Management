@@ -63,7 +63,8 @@
               "buildTarget": "PerFace:build:production"
             },
             "development": {
-              "buildTarget": "PerFace:build:development"
+              "buildTarget": "PerFace:build:development",
+              "port": 6900
             }
           },
           "defaultConfiguration": "development"
