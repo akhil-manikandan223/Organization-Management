@@ -5,6 +5,10 @@ import { Views } from '../home/dashboard/views/views';
 import { WatchTime } from '../home/dashboard/watch-time/watch-time';
 import { Revenue } from '../home/dashboard/revenue/revenue';
 import { Metrics } from '../reports-analytics/metrics/metrics';
+import { Departments } from '../organization-structure/departments/departments';
+import { Teams } from '../organization-structure/teams/teams';
+import { Locations } from '../organization-structure/locations/locations';
+import { Workspaces } from '../organization-structure/workspaces/workspaces';
 
 @Injectable()
 export class DashboardWidget {
@@ -50,6 +54,34 @@ export class DashboardWidget {
       label: 'Analytics',
       content: Metrics,
       rows: 2,
+      columns: 2,
+    },
+    {
+      id: 6,
+      label: 'Departments',
+      content: Departments,
+      rows: 2,
+      columns: 1,
+    },
+    {
+      id: 7,
+      label: 'Your Team',
+      content: Teams,
+      rows: 2,
+      columns: 1,
+    },
+    {
+      id: 8,
+      label: 'Locations',
+      content: Locations,
+      rows: 1,
+      columns: 2,
+    },
+    {
+      id: 9,
+      label: 'Your Workspace',
+      content: Workspaces,
+      rows: 1,
       columns: 2,
     },
   ]);
