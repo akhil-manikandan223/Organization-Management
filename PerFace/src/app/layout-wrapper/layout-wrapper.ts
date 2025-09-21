@@ -1,4 +1,4 @@
-import { Component, computed, signal } from '@angular/core';
+import { Component, computed, effect, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { MaterialModule } from '../material.module';
 import { CustomSidenav } from '../custom-sidenav/custom-sidenav';
@@ -11,5 +11,11 @@ import { CustomSidenav } from '../custom-sidenav/custom-sidenav';
 })
 export class LayoutWrapper {
   collapsed = signal(false);
+  darkMode = signal(false);
+
+  setDarkMode = effect(() => {
+    document.documentElement.classList.toggle('dark', this.darkMode());
+  });
+
   sidenavWidth = computed(() => (this.collapsed() ? '65px' : '250px'));
 }

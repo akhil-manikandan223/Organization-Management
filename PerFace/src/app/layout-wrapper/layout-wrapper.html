@@ -20,6 +20,17 @@
   <button mat-icon-button aria-label="Favorites">
     <mat-icon>apps</mat-icon>
   </button>
+  <button
+    mat-icon-button
+    aria-label="Dark Mode"
+    (click)="darkMode.set(!darkMode())"
+  >
+    @if(darkMode()){
+    <mat-icon>light_mode</mat-icon>
+    } @else {
+    <mat-icon>dark_mode</mat-icon>
+    }
+  </button>
 </mat-toolbar>
 <mat-sidenav-container>
   <mat-sidenav

@@ -1,8 +1,8 @@
 :host {
   position: absolute;
   z-index: 2;
-  background: whitesmoke;
-  color: black;
+  background: var(--mat-sys-surface-container);
+  color: var(--mat-sys-inverse-surface);
   top: 0;
   left: 0;
   width: 100%;
@@ -54,5 +54,5 @@
   position: absolute;
   top: 0;
   left: 0;
-  color: #cc0000;
+  color: var(--mat-sys-error);
 }

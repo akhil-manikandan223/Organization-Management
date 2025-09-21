@@ -1,6 +1,8 @@
 <div
   class="container mat-elevation-z4"
-  [style.background-color]="data().backgroundColor ?? 'white'"
+  [style.background-color]="
+    data().backgroundColor ?? 'var(--mat-sys-surface-bright)'
+  "
   [style.color]="data().color ?? 'inherit'"
   cdkDrag
   cdkDragPreviewContainer="parent"
