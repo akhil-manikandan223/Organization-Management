@@ -1,0 +1,97 @@
+:host {
+  padding: 20px;
+}
+
+.container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  z-index: -1;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+}
+
+.container-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.header-logo {
+  bottom: 0;
+  position: absolute;
+  height: 80px;
+  margin-left: 40px;
+}
+
+.login-form-container {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 40px;
+  padding: auto;
+
+  form {
+    max-width: 600px;
+    padding: 35px;
+    background-color: #e5e9ff;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-right: 80px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+
+    .form-row {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+    }
+
+    mat-form-field {
+      width: 100%;
+    }
+
+    .form-actions {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+  }
+}
+
+.mat-divider.mat-divider-vertical {
+  color: blue;
+}
+
+.login-form-container-header {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.header-logo-in-login-container {
+  height: 50px;
+  margin-left: 16px;
+}
+
+.sign-up-button {
+  background-color: #15996f !important;
+  color: #fff !important;
+}
+
+@media (max-width: 600px) {
+  .form-row {
+    flex-direction: column;
+  }
+}

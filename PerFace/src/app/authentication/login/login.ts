@@ -7,6 +7,8 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { SnackbarNotification } from '../../shared/snackbar-notification';
+import { AuthService } from '../../services/auth/auth';
 
 @Component({
   selector: 'app-login',
@@ -16,26 +18,35 @@ import {
 })
 export class Login {
   form: FormGroup;
-  constructor(private router: Router, private fb: FormBuilder) {
+  constructor(
+    private router: Router,
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private snackbarNotification: SnackbarNotification
+  ) {
     this.form = this.fb.group({
-      fullName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      phone: ['', Validators.required],
-      dob: ['', Validators.required],
-      address: [''],
-      select: [''],
+      password: ['', Validators.required],
     });
-  }
-
-  login() {
-    this.router.navigate(['/dashboard']);
   }
 
   onSubmit() {
     if (this.form.valid) {
-      this.router.navigate(['/dashboard']);
+      this.authService.loginUser(this.form.value).subscribe(
+        (response) => {
+          this.snackbarNotification.showSuccess('Logged in successfully!');
+          this.router.navigate(['/dashboard']);
+        },
+        (error) => {
+          this.snackbarNotification.showError('Invalid credentials!');
+        }
+      );
     } else {
-      console.log('invalid submission', this.form.value);
+      this.snackbarNotification.showError('Invalid form values');
     }
+  }
+
+  goToRegisterUser() {
+    this.router.navigate(['/register']);
   }
 }

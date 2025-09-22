@@ -61,9 +61,14 @@ body {
   border-left: 5px solid var(--mat-sys-outline);
 }
 
+.snackbar-error {
+  background-color: #f44336;
+  color: #fff;
+}
+
 html {
   --mat-sys-primary: rgb(65 95 145);
-  --sys-surface-tint: rgb(65 95 145);
+  --mat-sys-surface-tint: rgb(65 95 145);
   --mat-sys-on-primary: rgb(255 255 255);
   --mat-sys-primary-container: rgb(214 227 255);
   --mat-sys-on-primary-container: rgb(40 71 119);

@@ -1,1 +1,145 @@
-<p>register works!</p>
+<div class="container">
+  <img src="assets/svgs/login-background-3.svg" />
+</div>
+
+<div class="container-wrapper">
+  <div class="application-name">
+    <img
+      class="header-logo"
+      src="assets/app-logos/Persona-10.png"
+      alt="App Logo"
+    />
+  </div>
+
+  <div class="login-form-container">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="login-form-container-header">
+        <img
+          class="header-logo-in-login-container"
+          src="assets/app-logos/Persona-logo.png"
+          alt="App Logo"
+        />
+        <mat-divider [vertical]="true"></mat-divider>
+        <span
+          style="
+            text-align: center;
+            font-weight: 600;
+            color: #333;
+            font-size: 2rem;
+            margin-top: 16px;
+          "
+          >Sign in</span
+        >
+      </div>
+      <div class="form-row">
+        <mat-form-field floatLabel="auto">
+          <mat-label>First Name</mat-label>
+          <input matInput formControlName="firstName" required />
+          <mat-icon matSuffix>person</mat-icon>
+          @if (form.get('firstName')?.hasError('required')) {
+          <mat-error>First name is required</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field floatLabel="auto">
+          <mat-label>Last Name</mat-label>
+          <input matInput formControlName="lastName" required />
+          <mat-icon matSuffix>person</mat-icon>
+          @if (form.get('lastName')?.hasError('required')) {
+          <mat-error>Last name is required</mat-error>
+          }
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <mat-form-field floatLabel="auto">
+          <mat-label>Phone No.</mat-label>
+          <input matInput formControlName="phone" required type="tel" />
+          <mat-icon matSuffix>phone</mat-icon>
+          @if (form.get('phone')?.hasError('required')) {
+          <mat-error>Phone no. is required</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field floatLabel="auto">
+          <mat-label>Date of Birth</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker"
+            formControlName="dob"
+            required
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          @if (form.get('dob')?.hasError('required')) {
+          <mat-error>Date of Birth is required</mat-error>
+          }
+        </mat-form-field>
+      </div>
+
+      <mat-form-field floatLabel="auto">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" type="email" required />
+        <mat-icon matSuffix>email</mat-icon>
+        @if (form.get('email')?.hasError('required')) {
+        <mat-error>Email is required</mat-error>
+        } @else if (form.get('email')?.hasError('email')){
+        <mat-error>Email format is invalid</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field floatLabel="auto">
+        <mat-label>Password</mat-label>
+        <input matInput formControlName="password" required type="text" />
+        <mat-icon matSuffix>lock</mat-icon>
+        @if (form.get('password')?.hasError('required')) {
+        <mat-error>Password is required</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Address Line 1</mat-label>
+        <textarea
+          matInput
+          formControlName="addressLine1"
+          rows="3"
+          required
+        ></textarea>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Address Line 2</mat-label>
+        <textarea matInput formControlName="addressLine2" rows="3"></textarea>
+      </mat-form-field>
+
+      <div class="form-row">
+        <mat-form-field>
+          <mat-label>City</mat-label>
+          <mat-select formControlName="city">
+            <mat-option value="India">India</mat-option>
+            <mat-option value="Pakistan">Pakistan</mat-option>
+            <mat-option value="Russia">Russia</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field floatLabel="auto">
+          <mat-label>Postal Code</mat-label>
+          <input matInput formControlName="postalCode" required type="text" />
+          <mat-icon matSuffix>lock</mat-icon>
+          @if (form.get('postalCode')?.hasError('required')) {
+          <mat-error>PostalCode is required</mat-error>
+          }
+        </mat-form-field>
+      </div>
+
+      <div class="form-actions">
+        <button mat-raised-button class="sign-up-button" type="submit">
+          Sign Up
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
