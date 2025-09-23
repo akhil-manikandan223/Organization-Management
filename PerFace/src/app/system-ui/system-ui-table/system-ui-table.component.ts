@@ -17,7 +17,9 @@ export interface ColumnDef {
       <!-- Dynamic column definitions -->
       @for (column of columns; track column.columnDef) {
       <ng-container [matColumnDef]="column.columnDef">
-        <th mat-header-cell *matHeaderCellDef>{{ column.header }}</th>
+        <th mat-header-cell *matHeaderCellDef>
+          <strong>{{ column.header }}</strong>
+        </th>
         <td mat-cell *matCellDef="let element">
           {{ column.cell ? column.cell(element) : element[column.columnDef] }}
         </td>
@@ -28,10 +30,14 @@ export interface ColumnDef {
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef>Actions</th>
         <td mat-cell *matCellDef="let element">
-          <button mat-icon-button color="primary" (click)="edit(element)">
-            <mat-icon>edit</mat-icon>
-          </button>
-          <button mat-icon-button color="warn" (click)="delete(element)">
+          <mat-icon class="edit-icon" (click)="edit(element)">edit</mat-icon>
+
+          <button
+            class="delete-icon"
+            mat-icon-button
+            color="warn"
+            (click)="delete(element)"
+          >
             <mat-icon>delete</mat-icon>
           </button>
         </td>
@@ -44,7 +50,19 @@ export interface ColumnDef {
       ></tr>
     </table>
   `,
-  styles: ``,
+  styles: `
+  .edit-icon {
+    color: var(--mat-sys-on-primary-container); 
+    font-size: 18px; 
+    cursor: pointer; 
+    margin-top: 6px
+}
+  .delete-icon {
+    color: var(--mat-sys-error); 
+    font-size: 18px; 
+    cursor: pointer; 
+    margin-top: 6px
+    }`,
 })
 export class SystemUITableComponent {
   @Input() columns: ColumnDef[] = [];

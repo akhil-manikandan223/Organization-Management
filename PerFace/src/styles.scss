@@ -22,6 +22,17 @@ $compact-form-field-theme: mat.define-theme(
   )
 );
 
+$my-table-theme: mat.define-theme(
+  (
+    color: (
+      use-system-variables: true,
+    ),
+    density: (
+      scale: -4,
+    ),
+  )
+);
+
 html {
   @include mat.theme($custom-theme);
   @include mat.toolbar-theme($custom-theme);
@@ -36,6 +47,7 @@ html {
   @include mat.button-toggle-theme($custom-theme);
   @include mat.menu-theme($custom-theme);
   @include mat.divider-theme($custom-theme);
+  @include mat.table-theme($my-table-theme);
 }
 
 body {
