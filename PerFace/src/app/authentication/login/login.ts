@@ -34,6 +34,7 @@ export class Login {
     if (this.form.valid) {
       this.authService.loginUser(this.form.value).subscribe(
         (response) => {
+          localStorage.setItem('loggedInUserData', JSON.stringify(response));
           this.snackbarNotification.showSuccess('Logged in successfully!');
           this.router.navigate(['/dashboard']);
         },

@@ -1,1 +1,3 @@
-<p>teams works!</p>
+@if (allUsers.length && columns.length) {
+<system-ui-table [columns]="columns" [data]="allUsers"></system-ui-table>
+}
