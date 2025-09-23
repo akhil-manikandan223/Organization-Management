@@ -2,11 +2,19 @@
   <button mat-icon-button (click)="collapsed.set(!collapsed())">
     <mat-icon>menu</mat-icon>
   </button>
+  @if(darkMode()) {
+  <img
+    class="header-logo"
+    src="assets/app-logos/Persona-09.png"
+    alt="App Logo"
+  />
+  } @else {
   <img
     class="header-logo"
     src="assets/app-logos/header-logo.png"
     alt="App Logo"
   />
+  }
   <span class="toolbar-spacer"></span>
   <button mat-icon-button aria-label="Search">
     <mat-icon>search</mat-icon>
