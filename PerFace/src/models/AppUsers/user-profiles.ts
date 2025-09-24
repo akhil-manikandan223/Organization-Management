@@ -1,7 +1,7 @@
 export interface UserProfile {
-  UserId: number;
-  FirstName: string;
-  LastName: string;
+  userId: number;
+  firstName: string;
+  lastName: string;
   Phone: string;
   Email: string;
   AddressLine1?: string;

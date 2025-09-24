@@ -33,7 +33,7 @@ export class MenuItemComponent {
     this.collapsed() ? '16px' : `${16 + this.level() * 16}px`
   );
 
-  logRoutes = effect(() => console.log(this.routeHistory(), this.level()));
+  // logRoutes = effect(() => console.log(this.routeHistory(), this.level()));
 
   toggleNested() {
     if (!this.item().subItems) return;

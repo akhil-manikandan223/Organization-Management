@@ -1,3 +1,9 @@
 @if (allUsers.length && columns.length) {
-<system-ui-table [columns]="columns" [data]="allUsers"></system-ui-table>
+<system-ui-table
+  [columns]="columns"
+  [data]="allUsers"
+  [config]="tableConfig"
+  (dataChanged)="onDataChanged($event)"
+>
+</system-ui-table>
 }

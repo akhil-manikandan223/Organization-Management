@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { SystemUITableComponent } from '../../system-ui/system-ui-table/system-ui-table.component';
-import { ColumnDef } from '../../system-ui/system-ui-table/system-ui-table.component';
+import {
+  SystemUITableComponent,
+  TableConfig,
+} from '../../system-ui/system-ui-table/system-ui-table';
+import { ColumnDef } from '../../system-ui/system-ui-table/system-ui-table';
 import { MaterialModule } from '../../material.module';
-import { UserProfile } from '../../services/user-profiles/user-profile';
 import { CommonModule } from '@angular/common';
+import { UserProfile } from '../../../models/AppUsers/user-profiles';
+import { UserProfileService } from '../../services/user-profiles/user-profile';
 
 @Component({
   selector: 'app-teams',
@@ -13,6 +17,8 @@ import { CommonModule } from '@angular/common';
 })
 export class Teams implements OnInit {
   allUsers: UserProfile[] = [];
+  filterValue = '';
+  filteredUsers: UserProfile[] = [];
 
   columns: ColumnDef[] = [
     { columnDef: 'firstName', header: 'First Name' },
@@ -24,7 +30,17 @@ export class Teams implements OnInit {
     { columnDef: 'createdDate', header: 'Created Date' },
   ];
 
-  constructor(private userProfileService: UserProfile) {}
+  tableConfig!: TableConfig;
+
+  constructor(private userProfileService: UserProfileService) {
+    this.tableConfig = {
+      deleteEndpoint: 'UserProfile/DeleteUser',
+      bulkDeleteEndpoint: 'UserProfile/DeleteMultipleUsers',
+      editRoute: '/edit-user',
+      idField: 'userId',
+      service: this.userProfileService,
+    };
+  }
 
   ngOnInit() {
     this.getAllUsers();
@@ -33,7 +49,10 @@ export class Teams implements OnInit {
   getAllUsers() {
     this.userProfileService.fetchAllUser().subscribe((response) => {
       this.allUsers = response;
-      console.log('all users', this.allUsers);
     });
+  }
+
+  onDataChanged(updatedData: any[]) {
+    this.allUsers = updatedData;
   }
 }

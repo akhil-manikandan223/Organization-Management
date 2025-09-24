@@ -1,0 +1,83 @@
+:host {
+  --table-icon-size: 18px;
+  --table-gap: 8px;
+  --button-size: 38px;
+  --search-field-min-width: 250px;
+}
+
+.table-header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.flex-spacer {
+  flex: 1 1 auto;
+}
+
+.utility-section {
+  display: flex;
+  align-items: center;
+  gap: var(--table-gap);
+
+  .multi-select-delete-button {
+    width: var(--button-size);
+    height: var(--button-size);
+    color: var(--mat-sys-on-error);
+    background: var(--mat-sys-error);
+
+    transition: transform 0.2s ease;
+
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+
+  .search-field {
+    min-width: var(--search-field-min-width);
+    flex-shrink: 0;
+  }
+}
+
+.mat-mdc-icon-button {
+  &.edit-icon {
+    color: var(--mat-sys-on-primary-container);
+    font-size: var(--table-icon-size);
+    margin-right: var(--table-gap);
+  }
+
+  &.delete-icon {
+    color: var(--mat-sys-error);
+    font-size: var(--table-icon-size);
+  }
+}
+
+.mat-mdc-table {
+  .mat-mdc-row {
+    will-change: background-color;
+    transition: background-color 0.15s ease;
+
+    &.selected-row {
+      background-color: var(--mat-sys-surface-variant);
+    }
+
+    &:hover {
+      background-color: var(--mat-sys-surface-container-low);
+    }
+  }
+
+  .mat-column-select {
+    width: 48px;
+    flex: 0 0 48px;
+  }
+
+  .mat-column-actions {
+    width: 120px;
+    flex: 0 0 120px;
+  }
+}
+
+.more-selection-button {
+  flex-shrink: 0;
+}
