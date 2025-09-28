@@ -5,9 +5,15 @@
   --search-field-min-width: 250px;
 }
 
+.table-container {
+  padding: 6px;
+  height: 95%;
+  // border: solid 1px black;
+}
+
 .example-container {
   width: 100%;
-  height: 80%;
+  height: 85%;
   overflow-x: auto;
   overflow-y: auto;
 }
@@ -118,6 +124,24 @@
   z-index: 3;
   background: var(--mat-sys-surface);
   min-width: 100px;
+}
+
+.paginator-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  // margin-top: 8px;
+
+  .paginator-info {
+    // font-size: 14px;
+    font-weight: 500;
+    color: #444;
+    padding-left: 8px;
+  }
+
+  mat-paginator {
+    flex: none;
+  }
 }
 
 .more-selection-button {

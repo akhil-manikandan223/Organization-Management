@@ -1,4 +1,10 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  ViewChild,
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MaterialModule } from '../../material.module';
 import { CommonModule } from '@angular/common';
@@ -7,6 +13,8 @@ import {
   ConfirmDialogData,
 } from '../../shared/confirm-dialog.component';
 import { SelectionModel } from '@angular/cdk/collections';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 
 export interface ColumnDef {
   columnDef: string;
@@ -33,6 +41,9 @@ export class SystemUITableComponent {
   @Input() data: any[] = [];
   @Input() config!: TableConfig;
   @Output() dataChanged = new EventEmitter<any[]>();
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  dataSource = new MatTableDataSource<any>([]);
 
   filterValue = '';
   filteredData: any[] = [];
@@ -42,12 +53,19 @@ export class SystemUITableComponent {
 
   ngOnInit() {
     this.filteredData = this.data;
+    this.dataSource.data = this.filteredData;
   }
 
   ngOnChanges() {
     this.filteredData = this.data;
     this.applyCurrentFilter();
     this.selection.clear();
+    this.dataSource.data = this.filteredData;
+  }
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.paginator.pageSize = 20;
   }
 
   get displayedColumns(): string[] {
@@ -58,7 +76,6 @@ export class SystemUITableComponent {
     return [...this.displayedColumns, 'actions'];
   }
 
-  // ADD THIS NEW GETTER FOR SELECT + ACTIONS
   get displayedColumnsWithSelectAndActions(): string[] {
     return ['select', ...this.displayedColumns, 'actions'];
   }
@@ -87,13 +104,14 @@ export class SystemUITableComponent {
   applyCurrentFilter() {
     if (!this.filterValue) {
       this.filteredData = this.data;
-      return;
+    } else {
+      this.filteredData = this.data.filter((item) =>
+        Object.values(item).some((val) =>
+          String(val).toLowerCase().includes(this.filterValue)
+        )
+      );
     }
-    this.filteredData = this.data.filter((item) =>
-      Object.values(item).some((val) =>
-        String(val).toLowerCase().includes(this.filterValue)
-      )
-    );
+    this.dataSource.data = this.filteredData; // 👈 update datasource
   }
 
   clearFilter() {
