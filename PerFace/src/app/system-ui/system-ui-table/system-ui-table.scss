@@ -8,7 +8,6 @@
 .table-container {
   padding: 6px;
   height: 95%;
-  // border: solid 1px black;
 }
 
 .example-container {
@@ -85,19 +84,17 @@
 
 .mat-mdc-header-cell,
 .mat-mdc-cell {
-  background: var(--mat-sys-surface); // required for sticky
+  background: var(--mat-sys-surface);
   z-index: 1;
-  min-width: 150px; // 👈 adjust to avoid squishing
-  white-space: nowrap; // prevent wrapping
+  min-width: 150px;
+  white-space: nowrap;
 }
 
 .mat-mdc-header-cell.sticky,
 .mat-mdc-cell.sticky {
   position: sticky;
-  left: 0; // for sticky columns
-  background: var(
-    --mat-sys-surface
-  ); // background is needed so content under it doesn’t bleed through
+  left: 0;
+  background: var(--mat-sys-surface);
   z-index: 2;
 }
 
@@ -117,7 +114,6 @@
 //   background: #fff;
 // }
 
-/* Sticky: last col (actions) */
 .mat-column-actions {
   position: sticky;
   right: 0;
@@ -130,10 +126,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  // margin-top: 8px;
 
   .paginator-info {
-    // font-size: 14px;
     font-weight: 500;
     color: #444;
     padding-left: 8px;
@@ -146,4 +140,23 @@
 
 .more-selection-button {
   flex-shrink: 0;
+}
+
+table.mat-table {
+  border-collapse: separate;
+}
+
+tr.mat-mdc-header-row {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--mat-sys-surface);
+}
+
+.mat-column-select {
+  z-index: 11;
+}
+
+.mat-column-actions {
+  z-index: 11;
 }
