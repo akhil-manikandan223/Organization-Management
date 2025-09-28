@@ -66,9 +66,11 @@
 }
 
 .mat-mdc-table {
+  width: 100%;
   min-width: 1200px;
   table-layout: auto;
 }
+
 .mat-mdc-row {
   will-change: background-color;
   transition: background-color 0.15s ease;
@@ -101,23 +103,20 @@
 .mat-column-select {
   position: sticky;
   left: 0;
-  z-index: 3;
+  z-index: 11;
   background: var(--mat-sys-surface);
   min-width: 60px;
   max-width: 60px;
-}
 
-// .mat-column-id {
-//   position: sticky;
-//   left: 60px;
-//   z-index: 3;
-//   background: #fff;
-// }
+  text-overflow: clip !important;
+  overflow: visible !important;
+  white-space: normal !important;
+}
 
 .mat-column-actions {
   position: sticky;
   right: 0;
-  z-index: 3;
+  z-index: 11;
   background: var(--mat-sys-surface);
   min-width: 100px;
 }
@@ -153,10 +152,22 @@ tr.mat-mdc-header-row {
   background: var(--mat-sys-surface);
 }
 
-.mat-column-select {
-  z-index: 11;
+.mat-mdc-row .mat-mdc-cell {
+  border-bottom: 1px solid transparent;
+  border-top: 1px solid transparent;
+  cursor: pointer;
 }
 
-.mat-column-actions {
-  z-index: 11;
+.mat-mdc-row:hover .mat-mdc-cell {
+  border-color: #e0e0e0;
+  background: #f3f3f3;
+  color: black;
+}
+
+.mat-mdc-table-sticky-border-elem-right {
+  border-left: 1px solid #e0e0e0;
+}
+
+.mat-mdc-table-sticky-border-elem-left {
+  border-right: 1px solid #e0e0e0;
 }

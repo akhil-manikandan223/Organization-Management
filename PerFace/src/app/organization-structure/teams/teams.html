@@ -7,3 +7,7 @@
 >
 </system-ui-table>
 }
+
+<ng-template #createdDateTemplate let-row>
+  {{ row.createdDate | date : "dd MMM yyyy" }}
+</ng-template>

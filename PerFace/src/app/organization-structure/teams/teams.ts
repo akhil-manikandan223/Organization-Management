@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import {
   SystemUITableComponent,
   TableConfig,
@@ -19,16 +19,10 @@ export class Teams implements OnInit {
   allUsers: UserProfile[] = [];
   filterValue = '';
   filteredUsers: UserProfile[] = [];
+  @ViewChild('createdDateTemplate') createdDateTemplate!: TemplateRef<any>;
+  @ViewChild('userImageTemplate') userImageTemplate!: TemplateRef<any>;
 
-  columns: ColumnDef[] = [
-    { columnDef: 'firstName', header: 'First Name' },
-    { columnDef: 'lastName', header: 'Last Name' },
-    { columnDef: 'phone', header: 'Phone' },
-    { columnDef: 'email', header: 'Email' },
-    { columnDef: 'addressLine1', header: 'Address 1' },
-    { columnDef: 'city', header: 'City' },
-    { columnDef: 'createdDate', header: 'Created Date' },
-  ];
+  columns: ColumnDef[] = [];
 
   tableConfig!: TableConfig;
 
@@ -44,6 +38,31 @@ export class Teams implements OnInit {
 
   ngOnInit() {
     this.getAllUsers();
+  }
+
+  ngAfterViewInit() {
+    this.initializeColumns();
+  }
+
+  initializeColumns() {
+    this.columns = [
+      {
+        columnDef: 'firstName',
+        header: 'First Name',
+        sticky: true,
+      },
+      { columnDef: 'lastName', header: 'Last Name' },
+      { columnDef: 'phone', header: 'Phone' },
+      { columnDef: 'email', header: 'Email' },
+      { columnDef: 'addressLine1', header: 'Address 1' },
+      { columnDef: 'addressLine2', header: 'Address 2' },
+      { columnDef: 'city', header: 'City' },
+      {
+        columnDef: 'createdDate',
+        header: 'Created Date',
+        customTemplate: this.createdDateTemplate,
+      },
+    ];
   }
 
   getAllUsers() {

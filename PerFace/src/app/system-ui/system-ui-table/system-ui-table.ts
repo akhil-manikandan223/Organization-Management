@@ -4,6 +4,7 @@ import {
   Output,
   EventEmitter,
   ViewChild,
+  TemplateRef,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MaterialModule } from '../../material.module';
@@ -20,6 +21,12 @@ export interface ColumnDef {
   columnDef: string;
   header: string;
   cell?: (element: any) => string;
+  customTemplate?: TemplateRef<any>;
+  sticky?: boolean;
+  stickyEnd?: boolean;
+  width?: string;
+  minWidth?: string;
+  maxWidth?: string;
 }
 
 export interface TableConfig {
@@ -80,6 +87,10 @@ export class SystemUITableComponent {
     return ['select', ...this.displayedColumns, 'actions'];
   }
 
+  hasCustomTemplate(column: ColumnDef): boolean {
+    return !!column.customTemplate;
+  }
+
   isAllSelected() {
     const numSelected = this.selection.selected.length;
     const numRows = this.filteredData.length;
@@ -111,7 +122,7 @@ export class SystemUITableComponent {
         )
       );
     }
-    this.dataSource.data = this.filteredData; // 👈 update datasource
+    this.dataSource.data = this.filteredData;
   }
 
   clearFilter() {
