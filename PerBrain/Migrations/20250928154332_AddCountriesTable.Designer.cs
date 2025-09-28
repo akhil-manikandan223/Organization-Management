@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PerBrain.Model;
 
@@ -11,9 +12,11 @@ using PerBrain.Model;
 namespace PerBrain.Migrations
 {
     [DbContext(typeof(PerBrainDbContext))]
-    partial class PerBrainDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250928154332_AddCountriesTable")]
+    partial class AddCountriesTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,33 +51,6 @@ namespace PerBrain.Migrations
                     b.HasKey("CountryId");
 
                     b.ToTable("Countries");
-                });
-
-            modelBuilder.Entity("PerBrain.Model.StatesProvinces.StateProvince", b =>
-                {
-                    b.Property<int>("StateProvinceId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StateProvinceId"));
-
-                    b.Property<string>("CapitalCity")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("CountryId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("StateProvinceId");
-
-                    b.ToTable("StatesProvinces");
                 });
 
             modelBuilder.Entity("PerBrain.Model.UserProfiles.UserProfile", b =>
