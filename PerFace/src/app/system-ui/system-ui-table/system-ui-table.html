@@ -11,6 +11,17 @@
       >
         <mat-icon>delete</mat-icon>
       </button>
+
+      <mat-button-toggle-group
+        [value]="selectedStatus"
+        (change)="onStatusChange($event)"
+        aria-label="Filter Status"
+      >
+        <mat-button-toggle value="all">All</mat-button-toggle>
+        <mat-button-toggle value="active">Active</mat-button-toggle>
+        <mat-button-toggle value="inactive">Inactive</mat-button-toggle>
+      </mat-button-toggle-group>
+
       <mat-form-field appearance="outline" class="search-field">
         <mat-label>Search</mat-label>
         <input matInput (keyup)="applyFilter($event)" placeholder="Search..." />

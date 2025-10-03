@@ -37,6 +37,8 @@ export interface TableConfig {
   service?: any;
 }
 
+export type FilterStatus = 'all' | 'active' | 'inactive';
+
 @Component({
   selector: 'system-ui-table',
   imports: [MaterialModule, CommonModule],
@@ -55,6 +57,8 @@ export class SystemUITableComponent {
   filterValue = '';
   filteredData: any[] = [];
   selection = new SelectionModel<any>(true, []);
+
+  selectedStatus: FilterStatus = 'all';
 
   constructor(private dialog: MatDialog) {}
 
@@ -232,6 +236,23 @@ export class SystemUITableComponent {
           console.error('Error bulk deleting items:', error);
         },
       });
+    }
+  }
+
+  onStatusChange(event: any) {
+    this.selectedStatus = event.value;
+    console.log('Status changed to:', this.selectedStatus);
+    this.filterData(this.selectedStatus);
+  }
+
+  private filterData(status: FilterStatus) {
+    switch (status) {
+      case 'all':
+        break;
+      case 'active':
+        break;
+      case 'inactive':
+        break;
     }
   }
 }
