@@ -24,6 +24,23 @@ export class CustomSidenav {
 
   menuItems = signal<MenuItem[]>([
     {
+      icon: 'admin_panel_settings',
+      label: 'Admin',
+      route: 'admin',
+      subItems: [
+        {
+          icon: 'add_moderator',
+          label: 'Roles',
+          route: 'user-roles',
+        },
+        {
+          icon: 'approval_delegation_off',
+          label: 'Permissions',
+          route: 'permissions',
+        },
+      ],
+    },
+    {
       icon: 'dashboard',
       label: 'Dashboard',
       route: 'dashboard',

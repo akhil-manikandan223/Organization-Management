@@ -14,6 +14,11 @@ export const routes: Routes = [
     component: LayoutWrapper,
     children: [
       {
+        path: 'admin',
+        loadChildren: () =>
+          import('./admin/admin-module').then((m) => m.AdminModule),
+      },
+      {
         path: 'dashboard',
         loadChildren: () =>
           import('./home/home-module').then((m) => m.HomeModule),
