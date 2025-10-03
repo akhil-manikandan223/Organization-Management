@@ -4,7 +4,6 @@ import {
   Output,
   EventEmitter,
   ViewChild,
-  TemplateRef,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MaterialModule } from '../../material.module';
@@ -21,10 +20,11 @@ import {
   FilterStatus,
   TableConfig,
 } from '../system-ui-models/models';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'system-ui-table',
-  imports: [MaterialModule, CommonModule],
+  imports: [MaterialModule, CommonModule, FormsModule],
   templateUrl: './system-ui-table.html',
   styleUrl: './system-ui-table.scss',
 })
@@ -41,18 +41,21 @@ export class SystemUITableComponent {
   filteredData: any[] = [];
   selection = new SelectionModel<any>(true, []);
 
-  selectedStatus: FilterStatus = 'all';
+  selectedStatus: FilterStatus = 'active';
 
   constructor(private dialog: MatDialog) {}
 
   ngOnInit() {
     this.filteredData = this.data;
     this.dataSource.data = this.filteredData;
+    this.selectedStatus = 'active';
+    this.applyStatusFilter();
   }
 
   ngOnChanges() {
     this.filteredData = this.data;
     this.applyCurrentFilter();
+    this.applyStatusFilter();
     this.selection.clear();
     this.dataSource.data = this.filteredData;
   }
@@ -100,21 +103,18 @@ export class SystemUITableComponent {
   }
 
   applyCurrentFilter() {
+    let baseData = this.getFilteredDataByStatus();
+
     if (!this.filterValue) {
-      this.filteredData = this.data;
+      this.filteredData = baseData;
     } else {
-      this.filteredData = this.data.filter((item) =>
+      this.filteredData = baseData.filter((item) =>
         Object.values(item).some((val) =>
           String(val).toLowerCase().includes(this.filterValue)
         )
       );
     }
     this.dataSource.data = this.filteredData;
-  }
-
-  clearFilter() {
-    this.filterValue = '';
-    this.filteredData = this.data;
   }
 
   handleEdit(element: any) {
@@ -222,20 +222,29 @@ export class SystemUITableComponent {
     }
   }
 
-  onStatusChange(event: any) {
-    this.selectedStatus = event.value;
-    console.log('Status changed to:', this.selectedStatus);
-    this.filterData(this.selectedStatus);
+  private getFilteredDataByStatus(): any[] {
+    switch (this.selectedStatus) {
+      case 'active':
+        return this.data.filter((item) => item.isActive === true);
+      case 'inactive':
+        return this.data.filter((item) => item.isActive === false);
+      case 'all':
+      default:
+        return this.data;
+    }
   }
 
-  private filterData(status: FilterStatus) {
-    switch (status) {
-      case 'all':
-        break;
-      case 'active':
-        break;
-      case 'inactive':
-        break;
-    }
+  private applyStatusFilter() {
+    this.applyCurrentFilter();
+  }
+
+  clearFilter() {
+    this.filterValue = '';
+    this.applyCurrentFilter();
+  }
+
+  onStatusChange(event: any) {
+    this.selectedStatus = event.value;
+    this.applyStatusFilter();
   }
 }
