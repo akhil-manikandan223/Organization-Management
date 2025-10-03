@@ -6,6 +6,10 @@
   (dataChanged)="onDataChanged($event)"
 >
 </system-ui-table>
+} @else {
+<div class="spinner-container">
+  <app-loading-screen-5></app-loading-screen-5>
+</div>
 }
 
 <ng-template #createdDateTemplate let-row>

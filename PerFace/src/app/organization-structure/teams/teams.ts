@@ -8,10 +8,16 @@ import {
   ColumnDef,
   TableConfig,
 } from '../../system-ui/system-ui-models/models';
+import { LoadingScreen5 } from '../../utils/loading-screens/loading-screen-5/loading-screen-5';
 
 @Component({
   selector: 'app-teams',
-  imports: [MaterialModule, SystemUITableComponent, CommonModule],
+  imports: [
+    MaterialModule,
+    SystemUITableComponent,
+    CommonModule,
+    LoadingScreen5,
+  ],
   templateUrl: './teams.html',
   styleUrl: './teams.scss',
 })
