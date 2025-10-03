@@ -16,28 +16,11 @@ import {
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-
-export interface ColumnDef {
-  columnDef: string;
-  header: string;
-  cell?: (element: any) => string;
-  customTemplate?: TemplateRef<any>;
-  sticky?: boolean;
-  stickyEnd?: boolean;
-  width?: string;
-  minWidth?: string;
-  maxWidth?: string;
-}
-
-export interface TableConfig {
-  deleteEndpoint?: string;
-  bulkDeleteEndpoint?: string;
-  editRoute?: string;
-  idField: string;
-  service?: any;
-}
-
-export type FilterStatus = 'all' | 'active' | 'inactive';
+import {
+  ColumnDef,
+  FilterStatus,
+  TableConfig,
+} from '../system-ui-models/models';
 
 @Component({
   selector: 'system-ui-table',

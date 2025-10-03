@@ -1,13 +1,13 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import {
-  SystemUITableComponent,
-  TableConfig,
-} from '../../system-ui/system-ui-table/system-ui-table';
-import { ColumnDef } from '../../system-ui/system-ui-table/system-ui-table';
+import { SystemUITableComponent } from '../../system-ui/system-ui-table/system-ui-table';
 import { MaterialModule } from '../../material.module';
 import { CommonModule } from '@angular/common';
 import { UserProfile } from '../../../models/AppUsers/user-profiles';
 import { UserProfileService } from '../../services/user-profiles/user-profile';
+import {
+  ColumnDef,
+  TableConfig,
+} from '../../system-ui/system-ui-models/models';
 
 @Component({
   selector: 'app-teams',
