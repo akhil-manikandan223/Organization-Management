@@ -3,7 +3,13 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { SavedDocuments } from './saved-documents/saved-documents';
 
-const routes: Routes = [{ path: 'saved-documents', component: SavedDocuments }];
+const routes: Routes = [
+  {
+    path: 'saved-documents',
+    component: SavedDocuments,
+    data: { title: 'Saved Documents' },
+  },
+];
 
 @NgModule({
   declarations: [],

@@ -21,6 +21,8 @@ import {
   TableConfig,
 } from '../system-ui-models/models';
 import { FormsModule } from '@angular/forms';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { filter, map } from 'rxjs';
 
 @Component({
   selector: 'system-ui-table',
@@ -43,13 +45,29 @@ export class SystemUITableComponent {
 
   selectedStatus: FilterStatus = 'active';
 
-  constructor(private dialog: MatDialog) {}
+  pageTitle: string = '';
+
+  constructor(
+    private dialog: MatDialog,
+    private router: Router,
+    private activatedRoute: ActivatedRoute
+  ) {}
 
   ngOnInit() {
     this.filteredData = this.data;
     this.dataSource.data = this.filteredData;
     this.selectedStatus = this.config.filters?.defaultStatus || 'all';
     this.applyStatusFilter();
+
+    this.setPageTitle();
+    this.router.events
+      .pipe(
+        filter((event) => event instanceof NavigationEnd),
+        map(() => this.getRouteTitle())
+      )
+      .subscribe((title) => {
+        this.pageTitle = title || '';
+      });
   }
 
   ngOnChanges() {
@@ -63,6 +81,43 @@ export class SystemUITableComponent {
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.paginator.pageSize = 20;
+  }
+
+  private setPageTitle(): void {
+    this.pageTitle = this.getRouteTitle() || '';
+  }
+
+  private getRouteTitle(): string {
+    let route = this.activatedRoute;
+
+    // Navigate to the leaf route
+    while (route.firstChild) {
+      route = route.firstChild;
+    }
+
+    // Check for title in route data (traditional approach)
+    if (route.snapshot.data['title']) {
+      return route.snapshot.data['title'];
+    }
+
+    // Check for Angular 14+ title property
+    if (route.snapshot.title) {
+      return route.snapshot.title;
+    }
+
+    // Fallback: try to get from parent routes
+    let parent = route.parent;
+    while (parent) {
+      if (parent.snapshot.data['title']) {
+        return parent.snapshot.data['title'];
+      }
+      if (parent.snapshot.title) {
+        return parent.snapshot.title;
+      }
+      parent = parent.parent;
+    }
+
+    return '';
   }
 
   get displayedColumns(): string[] {

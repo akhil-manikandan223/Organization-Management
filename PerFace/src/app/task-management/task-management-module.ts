@@ -6,10 +6,9 @@ import { Tasks } from './tasks/tasks';
 import { Tracking } from './tracking/tracking';
 
 const routes: Routes = [
-  // { path: '', redirectTo: 'projects', pathMatch: 'full' },
-  { path: 'projects', component: Projects },
-  { path: 'tasks', component: Tasks },
-  { path: 'tracking', component: Tracking },
+  { path: 'projects', component: Projects, data: { title: 'Projects' } },
+  { path: 'tasks', component: Tasks, data: { title: 'Tasks' } },
+  { path: 'tracking', component: Tracking, data: { title: 'Tracker' } },
 ];
 
 @NgModule({

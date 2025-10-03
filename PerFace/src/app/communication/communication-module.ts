@@ -5,8 +5,16 @@ import { MessageManagment } from './message-managment/message-managment';
 import { Notifications } from './notifications/notifications';
 
 const routes: Routes = [
-  { path: 'notifications', component: Notifications },
-  { path: 'message', component: MessageManagment },
+  {
+    path: 'notifications',
+    component: Notifications,
+    data: { title: 'Notifications' },
+  },
+  {
+    path: 'message',
+    component: MessageManagment,
+    data: { title: 'Alert Management' },
+  },
 ];
 
 @NgModule({

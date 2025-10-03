@@ -7,10 +7,14 @@ import { Workspaces } from './workspaces/workspaces';
 import { Teams } from './teams/teams';
 
 const routes: Routes = [
-  { path: 'departments', component: Departments },
-  { path: 'locations', component: Locations },
-  { path: 'teams', component: Teams },
-  { path: 'workspaces', component: Workspaces },
+  {
+    path: 'departments',
+    component: Departments,
+    data: { title: 'Departments' },
+  },
+  { path: 'locations', component: Locations, data: { title: 'Locations' } },
+  { path: 'teams', component: Teams, data: { title: 'My Team' } },
+  { path: 'workspaces', component: Workspaces, data: { title: 'Workspace' } },
 ];
 
 @NgModule({

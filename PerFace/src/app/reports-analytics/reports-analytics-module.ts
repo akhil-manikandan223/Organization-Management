@@ -5,8 +5,8 @@ import { Reports } from './reports/reports';
 import { Metrics } from './metrics/metrics';
 
 const routes: Routes = [
-  { path: 'reports', component: Reports },
-  { path: 'metrics', component: Metrics },
+  { path: 'reports', component: Reports, data: { title: 'Reports' } },
+  { path: 'metrics', component: Metrics, data: { title: 'Metrics' } },
 ];
 
 @NgModule({

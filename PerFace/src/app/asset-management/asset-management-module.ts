@@ -5,8 +5,12 @@ import { Inventory } from './inventory/inventory';
 import { AssetsInHouse } from './assets-in-house/assets-in-house';
 
 const routes: Routes = [
-  { path: 'inventory', component: Inventory },
-  { path: 'assets-in-house', component: AssetsInHouse },
+  { path: 'inventory', component: Inventory, data: { title: 'Inventory' } },
+  {
+    path: 'assets-in-house',
+    component: AssetsInHouse,
+    data: { title: 'In-House Assets' },
+  },
 ];
 
 @NgModule({

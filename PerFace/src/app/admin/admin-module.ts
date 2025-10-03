@@ -5,8 +5,12 @@ import { UserRoles } from './user-roles/user-roles';
 import { Permissions } from './permissions/permissions';
 
 const routes: Routes = [
-  { path: 'user-roles', component: UserRoles },
-  { path: 'permissions', component: Permissions },
+  { path: 'user-roles', component: UserRoles, data: { title: 'Roles' } },
+  {
+    path: 'permissions',
+    component: Permissions,
+    data: { title: 'Permissions' },
+  },
 ];
 
 @NgModule({

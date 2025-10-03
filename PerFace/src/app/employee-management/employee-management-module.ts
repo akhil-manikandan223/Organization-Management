@@ -6,9 +6,13 @@ import { Leave } from './leave/leave';
 import { Attendance } from './attendance/attendance';
 
 const routes: Routes = [
-  { path: 'profile', component: ProfileManagement },
-  { path: 'leave', component: Leave },
-  { path: 'attendance', component: Attendance },
+  {
+    path: 'profile',
+    component: ProfileManagement,
+    data: { title: 'User Profile' },
+  },
+  { path: 'leave', component: Leave, data: { title: 'Time Off' } },
+  { path: 'attendance', component: Attendance, data: { title: 'Attendance' } },
 ];
 
 @NgModule({
