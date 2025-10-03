@@ -18,6 +18,11 @@ export interface TableConfig {
   editRoute?: string;
   idField: string;
   service?: any;
+  filters?: {
+    showStatusFilter?: boolean;
+    defaultStatus?: FilterStatus; // 'all' | 'active' | 'inactive'
+    showSearchFilter?: boolean;
+  };
 }
 
 export type FilterStatus = 'all' | 'active' | 'inactive';

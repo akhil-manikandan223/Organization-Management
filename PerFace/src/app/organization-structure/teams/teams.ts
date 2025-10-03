@@ -34,6 +34,11 @@ export class Teams implements OnInit {
       editRoute: '/edit-user',
       idField: 'userId',
       service: this.userProfileService,
+      filters: {
+        showStatusFilter: true,
+        defaultStatus: 'active',
+        showSearchFilter: true,
+      },
     };
   }
 

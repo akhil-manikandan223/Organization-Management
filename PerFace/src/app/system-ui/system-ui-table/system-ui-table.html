@@ -2,8 +2,8 @@
   <div class="table-header">
     <span class="flex-spacer"></span>
     <div class="utility-section">
+      @if (selection.hasValue() && config.bulkDeleteEndpoint) {
       <button
-        *ngIf="selection.hasValue() && config.bulkDeleteEndpoint"
         class="multi-select-delete-button"
         matFab
         (click)="handleBulkDelete()"
@@ -11,7 +11,10 @@
       >
         <mat-icon>delete</mat-icon>
       </button>
+      }
 
+      <!-- Status Filter - Conditional -->
+      @if (showStatusFilter) {
       <mat-button-toggle-group
         [value]="selectedStatus"
         (change)="onStatusChange($event)"
@@ -21,7 +24,10 @@
         <mat-button-toggle value="active">Active</mat-button-toggle>
         <mat-button-toggle value="inactive">Inactive</mat-button-toggle>
       </mat-button-toggle-group>
+      }
 
+      <!-- Search Filter - Conditional -->
+      @if (showSearchFilter) {
       <mat-form-field appearance="outline" class="search-field">
         <mat-label>Search</mat-label>
         <input
@@ -38,6 +44,11 @@
           <mat-icon>close</mat-icon>
         </button>
       </mat-form-field>
+      }
+
+      <button class="create-button" matMiniFab aria-label="Add new">
+        <mat-icon>add_2</mat-icon>
+      </button>
 
       <button
         mat-icon-button

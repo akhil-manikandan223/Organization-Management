@@ -180,3 +180,8 @@ mat-button-toggle-group {
 mat-button-toggle {
   border: none !important;
 }
+
+.create-button {
+  width: var(--button-size);
+  height: var(--button-size);
+}

@@ -48,7 +48,7 @@ export class SystemUITableComponent {
   ngOnInit() {
     this.filteredData = this.data;
     this.dataSource.data = this.filteredData;
-    this.selectedStatus = 'active';
+    this.selectedStatus = this.config.filters?.defaultStatus || 'all';
     this.applyStatusFilter();
   }
 
@@ -75,6 +75,14 @@ export class SystemUITableComponent {
 
   get displayedColumnsWithSelectAndActions(): string[] {
     return ['select', ...this.displayedColumns, 'actions'];
+  }
+
+  get showStatusFilter(): boolean {
+    return this.config.filters?.showStatusFilter ?? false;
+  }
+
+  get showSearchFilter(): boolean {
+    return this.config.filters?.showSearchFilter ?? true;
   }
 
   hasCustomTemplate(column: ColumnDef): boolean {
