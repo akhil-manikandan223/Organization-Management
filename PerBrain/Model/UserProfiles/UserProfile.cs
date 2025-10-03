@@ -17,6 +17,7 @@ namespace PerBrain.Model.UserProfiles
         public string AddressLine2 { get; set; }
         public string PostalCode { get; set; }
         public string City { get; set; }
+        public bool isActive { get; set; } = true;
         public DateTime? CreatedDate { get; set; }
 
     }

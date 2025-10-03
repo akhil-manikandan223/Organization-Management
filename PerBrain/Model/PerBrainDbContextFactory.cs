@@ -9,7 +9,7 @@ namespace PerBrain.Model
         {
             var optionsBuilder = new DbContextOptionsBuilder<PerBrainDbContext>();
 
-            // 👇 Replace with your actual connection string
+            // 👇
             optionsBuilder.UseSqlServer("Server=SMM-LP212\\SQLDEV22;Database=PerMind;Trusted_Connection=True;TrustServerCertificate=True;");
 
             return new PerBrainDbContext(optionsBuilder.Options);

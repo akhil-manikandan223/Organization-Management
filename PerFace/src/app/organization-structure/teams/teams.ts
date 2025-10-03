@@ -20,6 +20,7 @@ export class Teams implements OnInit {
   filterValue = '';
   filteredUsers: UserProfile[] = [];
   @ViewChild('createdDateTemplate') createdDateTemplate!: TemplateRef<any>;
+  @ViewChild('isActiveStateTemplate') isActiveStateTemplate!: TemplateRef<any>;
   @ViewChild('userImageTemplate') userImageTemplate!: TemplateRef<any>;
 
   columns: ColumnDef[] = [];
@@ -54,6 +55,11 @@ export class Teams implements OnInit {
       { columnDef: 'lastName', header: 'Last Name' },
       { columnDef: 'phone', header: 'Phone' },
       { columnDef: 'email', header: 'Email' },
+      {
+        columnDef: 'isActive',
+        header: 'Status',
+        customTemplate: this.isActiveStateTemplate,
+      },
       { columnDef: 'addressLine1', header: 'Address 1' },
       { columnDef: 'addressLine2', header: 'Address 2' },
       { columnDef: 'city', header: 'City' },

@@ -11,6 +11,7 @@ namespace PerBrain.Model.Countries
         public string Name { get; set; }
         public string PhoneCode { get; set; }
         public string CapitalCity { get; set; }
+        public bool isActive { get; set; } = true;
         public DateTime? CreatedDate { get; set; }
     }
 }

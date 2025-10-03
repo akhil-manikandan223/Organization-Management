@@ -66,14 +66,26 @@ namespace PerBrain.Controllers.UserProfiles
                     return NotFound($"User with ID {id} not found");
                 }
 
-                _context.UserProfiles.Remove(user);
+                // Check if user is already inactive
+                if (!user.isActive)
+                {
+                    return BadRequest($"User with ID {id} is already inactive");
+                }
+
+                // Soft delete: Set isActive to false instead of removing
+                user.isActive = false;
                 _context.SaveChanges();
 
-                return Ok(new { message = "User deleted successfully", deletedUserId = id });
+                return Ok(new
+                {
+                    message = "User deactivated successfully",
+                    deactivatedUserId = id,
+                    user.isActive
+                });
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Error deleting user: {ex.Message}");
+                return StatusCode(500, $"Error deactivating user: {ex.Message}");
             }
         }
 
@@ -85,31 +97,33 @@ namespace PerBrain.Controllers.UserProfiles
             {
                 if (userIds == null || userIds.Count == 0)
                 {
-                    return BadRequest("No user IDs provided for deletion");
+                    return BadRequest("No user IDs provided for deactivation");
                 }
 
-                // Find all users with the provided IDs
-                var usersToDelete = _context.UserProfiles
-                    .Where(u => userIds.Contains(u.UserId))
+                // Find all active users with the provided IDs
+                var usersToDeactivate = _context.UserProfiles
+                    .Where(u => userIds.Contains(u.UserId) && u.isActive)
                     .ToList();
 
-                if (usersToDelete.Count == 0)
+                if (usersToDeactivate.Count == 0)
                 {
-                    return NotFound("No users found with the provided IDs");
+                    return NotFound("No active users found with the provided IDs");
                 }
 
-                // Remove all found users
-                _context.UserProfiles.RemoveRange(usersToDelete);
-                _context.SaveChanges();
+                // Set isActive to false for all found users
+                foreach (var user in usersToDeactivate)
+                {
+                    user.isActive = false;
+                }
 
-                // Commit the transaction
+                _context.SaveChanges();
                 transaction.Commit();
 
                 var response = new
                 {
-                    message = $"Successfully deleted {usersToDelete.Count} user(s)",
-                    deletedCount = usersToDelete.Count,
-                    deletedUserIds = usersToDelete.Select(u => u.UserId).ToList()
+                    message = $"Successfully deactivated {usersToDeactivate.Count} user(s)",
+                    deactivatedCount = usersToDeactivate.Count,
+                    deactivatedUserIds = usersToDeactivate.Select(u => u.UserId).ToList()
                 };
 
                 return Ok(response);
@@ -117,7 +131,7 @@ namespace PerBrain.Controllers.UserProfiles
             catch (Exception ex)
             {
                 transaction.Rollback();
-                return StatusCode(500, $"Error deleting users: {ex.Message}");
+                return StatusCode(500, $"Error deactivating users: {ex.Message}");
             }
         }
 

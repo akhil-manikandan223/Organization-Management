@@ -11,3 +11,13 @@
 <ng-template #createdDateTemplate let-row>
   {{ row.createdDate | date : "dd MMM yyyy" }}
 </ng-template>
+
+<ng-template #isActiveStateTemplate let-row>
+  <div
+    class="state-base"
+    [ngClass]="row.isActive ? 'active-state' : 'inactive-state'"
+  >
+    <mat-icon>{{ row.isActive ? "check_circle" : "cancel" }}</mat-icon>
+    <span>{{ row.isActive ? "Active" : "Inactive" }}</span>
+  </div>
+</ng-template>
