@@ -15,6 +15,36 @@
   height: 85%;
   overflow-x: auto;
   overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+  transition: scrollbar-color 0.3s ease;
+}
+
+.example-container:hover {
+  scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+}
+
+.example-container::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.example-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.example-container::-webkit-scrollbar-thumb {
+  background-color: transparent;
+  border-radius: 3px;
+  transition: background-color 0.3s ease;
+}
+
+.example-container:hover::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.example-container::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0, 0, 0, 0.4);
 }
 
 .table-header {
