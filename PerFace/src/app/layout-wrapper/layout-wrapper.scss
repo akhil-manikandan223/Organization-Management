@@ -1,6 +1,25 @@
 @use "@angular/material" as mat;
 @include mat.elevation-classes();
 
+::ng-deep mat-sidenav {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+::ng-deep .mat-drawer-inner-container {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  overflow-y: auto !important;
+}
+
 mat-toolbar {
   position: relative;
   z-index: 5;
