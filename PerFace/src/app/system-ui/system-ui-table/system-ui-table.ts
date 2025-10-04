@@ -288,7 +288,6 @@ export class SystemUITableComponent {
 
     deleteMethod.call(this.config.service, id).subscribe({
       next: (response: any) => {
-        // Success - show success message and update data
         const itemName =
           element?.name || element?.roleName || element?.firstName || 'Item';
         this.snackbarService.showSuccess(`${itemName} deleted successfully`);
@@ -299,37 +298,10 @@ export class SystemUITableComponent {
         this.dataChanged.emit(updatedData);
       },
       error: (error: HttpErrorResponse) => {
-        // Error handling with your snackbar service
         this.handleDeleteError(error, 'delete');
       },
     });
   }
-
-  // deleteItem(id: any, element?: any) {
-  //   if (!this.config.service) {
-  //     return;
-  //   }
-
-  //   const methodName = this.config.deleteMethodName || 'deleteById';
-  //   const deleteMethod = this.config.service[methodName];
-
-  //   if (typeof deleteMethod !== 'function') {
-  //     console.error(`Method ${methodName} not found in service`);
-  //     return;
-  //   }
-
-  //   deleteMethod.call(this.config.service, id).subscribe({
-  //     next: (response: any) => {
-  //       const updatedData = this.data.filter(
-  //         (item) => item[this.config.idField] !== id
-  //       );
-  //       this.dataChanged.emit(updatedData);
-  //     },
-  //     error: (error: any) => {
-  //       console.error('Error deleting item:', error);
-  //     },
-  //   });
-  // }
 
   bulkDeleteItems(ids: any[]) {
     if (!this.config.service) {
@@ -350,7 +322,6 @@ export class SystemUITableComponent {
 
     bulkDeleteMethod.call(this.config.service, ids).subscribe({
       next: (response: any) => {
-        // Success - show success message and update data
         this.snackbarService.showSuccess(
           `${ids.length} item(s) deleted successfully`
         );
@@ -362,47 +333,17 @@ export class SystemUITableComponent {
         this.dataChanged.emit(updatedData);
       },
       error: (error: HttpErrorResponse) => {
-        // Error handling with your snackbar service
         this.handleDeleteError(error, 'bulk delete');
       },
     });
   }
 
-  // bulkDeleteItems(ids: any[]) {
-  //   if (!this.config.service) {
-  //     return;
-  //   }
-
-  //   const methodName = this.config.bulkDeleteMethodName || 'deleteMultiple';
-  //   const bulkDeleteMethod = this.config.service[methodName];
-
-  //   if (typeof bulkDeleteMethod !== 'function') {
-  //     console.error(`Method ${methodName} not found in service`);
-  //     return;
-  //   }
-
-  //   bulkDeleteMethod.call(this.config.service, ids).subscribe({
-  //     next: (response: any) => {
-  //       const updatedData = this.data.filter(
-  //         (item) => !ids.includes(item[this.config.idField])
-  //       );
-  //       this.selection.clear();
-  //       this.dataChanged.emit(updatedData);
-  //     },
-  //     error: (error: any) => {
-  //       console.error('Error bulk deleting items:', error);
-  //     },
-  //   });
-  // }
-
   private handleDeleteError(error: HttpErrorResponse, operation: string) {
     let errorMessage = `Failed to ${operation} item(s)`;
 
-    // Extract error message from the API response
     if (error.error && error.error.message) {
       errorMessage = error.error.message;
     } else if (error.message) {
-      // Fallback to HTTP error message based on status
       if (error.status === 400) {
         errorMessage =
           error.error?.message || 'Bad request - please check your data';
@@ -415,10 +356,8 @@ export class SystemUITableComponent {
       }
     }
 
-    // Show error using your snackbar service
     this.snackbarService.showError(errorMessage);
 
-    // Log detailed error for debugging
     console.error(`Error during ${operation}:`, {
       status: error.status,
       statusText: error.statusText,
@@ -427,7 +366,6 @@ export class SystemUITableComponent {
       fullError: error,
     });
 
-    // If it's a bulk delete with detailed errors, show additional info
     if (
       error.error?.rolesWithActiveUsers &&
       Array.isArray(error.error.rolesWithActiveUsers)
@@ -435,7 +373,7 @@ export class SystemUITableComponent {
       const details = error.error.rolesWithActiveUsers.join(', ');
       setTimeout(() => {
         this.snackbarService.showError(`Details: ${details}`);
-      }, 3000); // Show after the first error message
+      }, 3000);
     }
   }
 
