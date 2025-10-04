@@ -1,1 +1,370 @@
-<p>edit-roles works!</p>
+<div class="edit-role-container">
+  <div class="page-header">
+    <div class="header-content">
+      <div class="left-section">
+        <button mat-icon-button (click)="onCancel()" class="back-button">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+        <div class="header-text">
+          @if (currentRole) {
+          <h2>{{ currentRole.roleName }}</h2>
+          }
+        </div>
+      </div>
+
+      <div class="right-section">
+        <button
+          mat-button
+          type="button"
+          (click)="onCancel()"
+          [disabled]="isSubmitting"
+        >
+          <mat-icon>close</mat-icon>
+          Cancel
+        </button>
+
+        <button
+          matButton="filled"
+          type="submit"
+          (click)="onSubmit()"
+          [disabled]="roleForm.invalid || isSubmitting"
+        >
+          @if (isSubmitting) {
+          <mat-icon>hourglass_empty</mat-icon>
+          } @else {
+          <mat-icon>save</mat-icon>
+          }
+          {{ isSubmitting ? "Updating..." : "Update Role" }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  @if(isLoading){
+  <div class="loading-container">
+    <app-loading-screen-5 />
+  </div>
+  } @if(!isLoading && currentRole) {
+  <div class="tabs-wrapper">
+    <mat-tab-group class="sticky-tabs">
+      <!-----------------------------------------------------Update Block-------------------------------------------------->
+
+      <mat-tab label="Update Role">
+        <div class="form-container">
+          <mat-card>
+            <mat-card-content>
+              <form [formGroup]="roleForm" (ngSubmit)="onSubmit()">
+                <div
+                  class="first-row"
+                  style="
+                    display: flex;
+                    justify-content: space-around;
+                    align-items: flex-start;
+                    gap: 16px;
+                  "
+                >
+                  <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>Name</mat-label>
+                    <input
+                      matInput
+                      formControlName="roleName"
+                      maxlength="100"
+                    />
+                    <mat-hint>Maximum 100 characters</mat-hint>
+                    @if(isFieldInvalid('roleName')){
+                    <mat-error>
+                      {{ getErrorMessage("roleName") }}
+                    </mat-error>
+                    }
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>Description</mat-label>
+                    <textarea
+                      matInput
+                      formControlName="description"
+                      placeholder="Enter role description"
+                      rows="4"
+                      maxlength="500"
+                    >
+                    </textarea>
+                    <mat-hint>Maximum 500 characters (Optional)</mat-hint>
+                    @if(isFieldInvalid('description')){
+                    <mat-error>
+                      {{ getErrorMessage("description") }}
+                    </mat-error>
+                    }
+                  </mat-form-field>
+                </div>
+
+                <div class="toggle-section">
+                  <mat-slide-toggle
+                    formControlName="isActive"
+                    [class]="getToggleClass()"
+                  >
+                    <span class="toggle-label">Active Status</span>
+                  </mat-slide-toggle>
+
+                  <div class="toggle-description">
+                    @if (roleForm.get('isActive')?.value) {
+                    <span>
+                      <mat-icon class="status-icon active"
+                        >check_circle</mat-icon
+                      >
+                      This role is <strong>active</strong> and can be assigned
+                      to users
+                    </span>
+                    } @else {
+                    <span>
+                      <mat-icon class="status-icon inactive">cancel</mat-icon>
+                      This role is <strong>inactive</strong> and cannot be
+                      assigned to users
+                    </span>
+                    }
+                  </div>
+                </div>
+              </form>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </mat-tab>
+
+      <!-------------------------------------------------Permissions Block-------------------------------------------------->
+
+      <mat-tab label="Permissions">
+        <div class="permissions-tab-content">
+          <!-- Grant All Permissions Header -->
+          <div class="grant-all-section">
+            <mat-checkbox
+              [checked]="areAllPermissionsSelected()"
+              [indeterminate]="areSomePermissionsSelected()"
+              (change)="onGrantAllToggle($event.checked)"
+              color="primary"
+              class="grant-all-checkbox"
+            >
+              <span class="grant-all-label">Grant all permissions</span>
+            </mat-checkbox>
+          </div>
+
+          <!-- Loading State -->
+          @if(isLoadingPermissions) {
+          <div class="loading-container">
+            <mat-spinner></mat-spinner>
+            <p>Loading permissions...</p>
+          </div>
+          }
+
+          <!-- Permissions by Module -->
+          @if(!isLoadingPermissions && allPermissions.length > 0) {
+          <div class="permissions-modules">
+            @for(moduleGroup of getPermissionsByModule(); track
+            moduleGroup.module) {
+            <div class="module-section">
+              <!-- Module Header -->
+              <div
+                class="module-header"
+                (click)="toggleModuleExpansion(moduleGroup.module)"
+              >
+                <div class="module-info">
+                  <mat-icon
+                    class="expand-icon"
+                    [class.expanded]="isModuleExpanded(moduleGroup.module)"
+                  >
+                    expand_more
+                  </mat-icon>
+                  <span class="module-name">{{ moduleGroup.module }}</span>
+                  <span class="permission-count">{{
+                    moduleGroup.permissions.length
+                  }}</span>
+                </div>
+
+                <!-- Module Select All -->
+                <mat-checkbox
+                  [checked]="
+                    areAllModulePermissionsSelected(moduleGroup.module)
+                  "
+                  [indeterminate]="
+                    areSomeModulePermissionsSelected(moduleGroup.module)
+                  "
+                  (change)="
+                    onModuleSelectAllToggle(moduleGroup.module, $event.checked)
+                  "
+                  (click)="$event.stopPropagation()"
+                  color="primary"
+                  class="module-select-all"
+                >
+                  Select all
+                </mat-checkbox>
+              </div>
+
+              <!-- Module Permissions (Expandable) -->
+              @if(isModuleExpanded(moduleGroup.module)) {
+              <div class="module-permissions">
+                <div class="permissions-grid">
+                  @for(permission of moduleGroup.permissions; track
+                  permission.permissionId) {
+                  <div class="permission-item">
+                    <mat-checkbox
+                      [checked]="isPermissionSelected(permission.permissionId)"
+                      (change)="
+                        onPermissionToggle(
+                          permission.permissionId,
+                          $event.checked
+                        )
+                      "
+                      color="primary"
+                    >
+                      <div class="permission-content">
+                        <span class="permission-name">{{
+                          permission.permissionName
+                        }}</span>
+                        @if(permission.description) {
+                        <span class="permission-description">{{
+                          permission.description
+                        }}</span>
+                        }
+                      </div>
+                    </mat-checkbox>
+                  </div>
+                  }
+                </div>
+              </div>
+              }
+            </div>
+            }
+          </div>
+          }
+
+          <!-- No Permissions State -->
+          @if(!isLoadingPermissions && allPermissions.length === 0) {
+          <div class="no-permissions">
+            <mat-icon>security</mat-icon>
+            <h4>No Permissions Available</h4>
+            <p>There are no permissions configured in the system.</p>
+          </div>
+          }
+        </div>
+      </mat-tab>
+
+      <!-----------------------------------------------------Statistics Block-------------------------------------------------->
+
+      <mat-tab label="Role Statistics">
+        <div class="form-container">
+          <mat-card class="stats-card">
+            <mat-card-content>
+              <div class="stats-grid">
+                <div class="stat-item">
+                  <div class="stat-icon">
+                    <mat-icon>group</mat-icon>
+                  </div>
+                  <div class="stat-content">
+                    <div class="stat-number">{{ currentRole.userCount }}</div>
+                    <div class="stat-label">Users Assigned</div>
+                  </div>
+                </div>
+
+                <div class="stat-item">
+                  <div class="stat-icon">
+                    <mat-icon>security</mat-icon>
+                  </div>
+                  <div class="stat-content">
+                    <div class="stat-number">
+                      {{ currentRole.permissions.length }}
+                    </div>
+                    <div class="stat-label">Permissions</div>
+                  </div>
+                </div>
+              </div>
+            </mat-card-content>
+          </mat-card>
+          <mat-card class="role-assigned-users">
+            <mat-card-header>
+              <mat-card-title>
+                <mat-icon>group</mat-icon>
+                Assigned Users
+              </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              @if(usersWithCurrentRole.length > 0) {
+              <div class="users-grid">
+                @for(user of usersWithCurrentRole; track user.userId) {
+                <div class="user-card">
+                  <div class="user-avatar">
+                    <mat-icon>person</mat-icon>
+                  </div>
+                  <div class="user-details">
+                    <div class="user-name">
+                      {{ user.firstName }} {{ user.lastName }}
+                    </div>
+                    <div class="user-email">{{ user.email }}</div>
+                    <div class="assigned-info">
+                      <mat-icon class="date-icon">schedule</mat-icon>
+                      <span>{{ user.assignedDate | date : "MMM d, y" }}</span>
+                    </div>
+                  </div>
+                </div>
+                }
+              </div>
+              } @else {
+              <div class="no-users">
+                <mat-icon>person_off</mat-icon>
+                <h4>No users assigned</h4>
+                <p>This role hasn't been assigned to any users yet</p>
+              </div>
+              }
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </mat-tab>
+
+      <!-----------------------------------------------------Details Block-------------------------------------------------->
+
+      <mat-tab label="Role Details">
+        <div class="form-container">
+          <mat-card class="metadata-card">
+            <mat-card-header> </mat-card-header>
+            <mat-card-content>
+              <div class="metadata-grid">
+                <div class="metadata-item">
+                  <span class="label">Role ID:</span>
+                  <span class="value">{{ currentRole.roleId }}</span>
+                </div>
+
+                <div class="metadata-item">
+                  <span class="label">Created Date:</span>
+                  <span class="value">{{
+                    currentRole.createdDate | date : "medium"
+                  }}</span>
+                </div>
+
+                @if(currentRole.createdByUser) {
+                <div class="metadata-item">
+                  <span class="label">Created By:</span>
+                  <span class="value">{{
+                    currentRole.createdByUser.fullName
+                  }}</span>
+                </div>
+                } @if(currentRole.updatedDate) {
+                <div class="metadata-item">
+                  <span class="label">Last Updated:</span>
+                  <span class="value">{{
+                    currentRole.updatedDate | date : "medium"
+                  }}</span>
+                </div>
+                } @if(currentRole.updatedByUser) {
+                <div class="metadata-item">
+                  <span class="label">Updated By:</span>
+                  <span class="value">{{
+                    currentRole.updatedByUser.fullName
+                  }}</span>
+                </div>
+                }
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+  }
+</div>
