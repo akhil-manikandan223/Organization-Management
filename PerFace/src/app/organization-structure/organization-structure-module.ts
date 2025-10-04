@@ -10,11 +10,23 @@ const routes: Routes = [
   {
     path: 'departments',
     component: Departments,
-    data: { title: 'Departments' },
+    data: { title: 'Departments', iconClass: 'category_search' },
   },
-  { path: 'locations', component: Locations, data: { title: 'Locations' } },
-  { path: 'teams', component: Teams, data: { title: 'My Team' } },
-  { path: 'workspaces', component: Workspaces, data: { title: 'Workspace' } },
+  {
+    path: 'locations',
+    component: Locations,
+    data: { title: 'Locations', iconClass: 'location_on' },
+  },
+  {
+    path: 'teams',
+    component: Teams,
+    data: { title: 'My Team', iconClass: 'groups' },
+  },
+  {
+    path: 'workspaces',
+    component: Workspaces,
+    data: { title: 'Workspace', iconClass: 'computer' },
+  },
 ];
 
 @NgModule({

@@ -1,8 +1,12 @@
 <div class="table-container">
   <div class="table-header">
     <div class="title-section">
+      @if (pageIcon) {
+      <mat-icon class="page-icon">{{ pageIcon }}</mat-icon>
+      }
       <h3 class="page-title">{{ pageTitle }}</h3>
     </div>
+
     <span class="flex-spacer"></span>
     <div class="utility-section">
       @if (selection.hasValue() && config.bulkDeleteEndpoint) {

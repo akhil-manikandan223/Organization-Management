@@ -45,6 +45,7 @@ export class SystemUITableComponent {
 
   selectedStatus: FilterStatus = 'active';
 
+  pageIcon: string = '';
   pageTitle: string = '';
 
   constructor(
@@ -60,13 +61,18 @@ export class SystemUITableComponent {
     this.applyStatusFilter();
 
     this.setPageTitle();
+    this.setPageIcon();
     this.router.events
       .pipe(
         filter((event) => event instanceof NavigationEnd),
-        map(() => this.getRouteTitle())
+        map(() => ({
+          title: this.getRouteTitle(),
+          icon: this.getRouteIcon(),
+        }))
       )
-      .subscribe((title) => {
+      .subscribe(({ title, icon }) => {
         this.pageTitle = title || '';
+        this.pageIcon = icon || '';
       });
   }
 
@@ -96,6 +102,10 @@ export class SystemUITableComponent {
     this.pageTitle = this.getRouteTitle() || '';
   }
 
+  private setPageIcon(): void {
+    this.pageIcon = this.getRouteIcon() || '';
+  }
+
   private getRouteTitle(): string {
     let route = this.activatedRoute;
 
@@ -118,6 +128,28 @@ export class SystemUITableComponent {
       }
       if (parent.snapshot.title) {
         return parent.snapshot.title;
+      }
+      parent = parent.parent;
+    }
+
+    return '';
+  }
+
+  private getRouteIcon(): string {
+    let route = this.activatedRoute;
+
+    while (route.firstChild) {
+      route = route.firstChild;
+    }
+
+    if (route.snapshot.data['iconClass']) {
+      return route.snapshot.data['iconClass'];
+    }
+
+    let parent = route.parent;
+    while (parent) {
+      if (parent.snapshot.data['iconClass']) {
+        return parent.snapshot.data['iconClass'];
       }
       parent = parent.parent;
     }
