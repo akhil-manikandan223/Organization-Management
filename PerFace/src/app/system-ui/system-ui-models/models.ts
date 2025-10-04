@@ -18,8 +18,8 @@ export interface TableConfig {
   editRoute: string;
   idField: string;
   service: any;
-  deleteMethodName?: string; // ✅ Add this
-  bulkDeleteMethodName?: string; // ✅ Add this
+  deleteMethodName?: string;
+  bulkDeleteMethodName?: string;
   filters?: {
     showStatusFilter?: boolean;
     defaultStatus?: FilterStatus;
