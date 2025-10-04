@@ -75,8 +75,8 @@ export class RoleService {
 
   constructor(private http: HttpClient) {}
 
-  fetchAllRoles(): Observable<Role[]> {
-    const url = `${this.baseUrl}Role/GetAllRoles`;
+  fetchAllRoles(includeInactive: boolean = true): Observable<Role[]> {
+    const url = `${this.baseUrl}Role/GetAllRoles?includeInactive=${includeInactive}`;
     return this.http.get<Role[]>(url);
   }
 
@@ -100,6 +100,21 @@ export class RoleService {
     return this.http.delete<any>(url);
   }
 
+  deleteMultipleRoles(roleIds: number[]): Observable<any> {
+    const url = `${this.baseUrl}Role/DeleteMultipleRoles`;
+    return this.http.delete<any>(url, { body: roleIds });
+  }
+
+  restoreRole(id: number): Observable<any> {
+    const url = `${this.baseUrl}Role/RestoreRole/${id}`;
+    return this.http.put<any>(url, {});
+  }
+
+  restoreMultipleRoles(roleIds: number[]): Observable<any> {
+    const url = `${this.baseUrl}Role/RestoreMultipleRoles`;
+    return this.http.put<any>(url, roleIds);
+  }
+
   getRolePermissions(roleId: number): Observable<Permission[]> {
     const url = `${this.baseUrl}Role/GetRolePermissions/${roleId}`;
     return this.http.get<Permission[]>(url);
@@ -113,10 +128,5 @@ export class RoleService {
   removePermission(roleId: number, permissionId: number): Observable<any> {
     const url = `${this.baseUrl}Role/RemovePermission/${roleId}/${permissionId}`;
     return this.http.delete<any>(url);
-  }
-
-  deleteMultipleRoles(roleIds: number[]): Observable<any> {
-    const url = `${this.baseUrl}Role/DeleteMultipleRoles`;
-    return this.http.delete<any>(url, { body: roleIds });
   }
 }

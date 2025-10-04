@@ -19,12 +19,19 @@ namespace PerBrain.Controllers.Roles
         }
 
         [HttpGet("GetAllRoles")]
-        public async Task<IActionResult> GetAllRoles()
+        public async Task<IActionResult> GetAllRolesAsync([FromQuery] bool includeInactive = false)
         {
             try
             {
-                // Get all roles with their related data
-                var rolesData = await _context.Roles
+                var rolesQuery = _context.Roles.AsQueryable();
+
+                // Filter by active status unless specifically requesting inactive ones
+                if (!includeInactive)
+                {
+                    rolesQuery = rolesQuery.Where(r => r.IsActive);
+                }
+
+                var rolesData = await rolesQuery
                     .Include(r => r.RolePermissions)
                     .ThenInclude(rp => rp.Permission)
                     .Include(r => r.UserRoles.Where(ur => ur.IsActive))
@@ -110,7 +117,7 @@ namespace PerBrain.Controllers.Roles
         }
 
         [HttpGet("GetRole/{id}")]
-        public async Task<IActionResult> GetRole(int id)
+        public async Task<IActionResult> GetRoleAsync(int id)
         {
             try
             {
@@ -168,7 +175,7 @@ namespace PerBrain.Controllers.Roles
         }
 
         [HttpPost("CreateRole")]
-        public async Task<IActionResult> CreateRole([FromBody] CreateRoleDto createRoleDto)
+        public async Task<IActionResult> CreateRoleAsync([FromBody] CreateRoleDto createRoleDto)
         {
             try
             {
@@ -215,7 +222,7 @@ namespace PerBrain.Controllers.Roles
                     await _context.SaveChangesAsync();
                 }
 
-                return CreatedAtAction(nameof(GetRole), new { id = role.RoleId },
+                return CreatedAtAction(nameof(GetRoleAsync), new { id = role.RoleId },
                     new { message = "Role created successfully", roleId = role.RoleId });
             }
             catch (Exception ex)
@@ -225,7 +232,7 @@ namespace PerBrain.Controllers.Roles
         }
 
         [HttpPut("UpdateRole/{id}")]
-        public async Task<IActionResult> UpdateRole(int id, [FromBody] UpdateRoleDto updateRoleDto)
+        public async Task<IActionResult> UpdateRoleAsync(int id, [FromBody] UpdateRoleDto updateRoleDto)
         {
             try
             {
@@ -291,7 +298,7 @@ namespace PerBrain.Controllers.Roles
         }
 
         [HttpDelete("DeleteRole/{id}")]
-        public async Task<IActionResult> DeleteRole(int id)
+        public async Task<IActionResult> DeleteRoleAsync(int id)
         {
             try
             {
@@ -314,7 +321,11 @@ namespace PerBrain.Controllers.Roles
                     });
                 }
 
-                _context.Roles.Remove(role);
+                // Soft delete - set IsActive to false instead of removing from database
+                role.IsActive = false;
+                role.UpdatedDate = DateTime.UtcNow;
+                role.UpdatedBy = 1; // You might get this from JWT token or current user context
+
                 await _context.SaveChangesAsync();
 
                 return Ok(new { message = "Role deleted successfully" });
@@ -325,8 +336,144 @@ namespace PerBrain.Controllers.Roles
             }
         }
 
+        [HttpDelete("DeleteMultipleRoles")]
+        public async Task<IActionResult> DeleteMultipleRolesAsync([FromBody] int[] roleIds)
+        {
+            try
+            {
+                if (roleIds == null || roleIds.Length == 0)
+                {
+                    return BadRequest(new { message = "No role IDs provided" });
+                }
+
+                var roles = await _context.Roles
+                    .Include(r => r.UserRoles)
+                    .Where(r => roleIds.Contains(r.RoleId))
+                    .ToListAsync();
+
+                if (roles.Count == 0)
+                {
+                    return NotFound(new { message = "No roles found with the provided IDs" });
+                }
+
+                var rolesWithActiveUsers = new List<string>();
+                var rolesToDelete = new List<Role>();
+
+                foreach (var role in roles)
+                {
+                    var activeUserCount = role.UserRoles.Count(ur => ur.IsActive);
+                    if (activeUserCount > 0)
+                    {
+                        rolesWithActiveUsers.Add($"{role.RoleName} ({activeUserCount} active users)");
+                    }
+                    else
+                    {
+                        rolesToDelete.Add(role);
+                    }
+                }
+
+                // If some roles have active users, return error with details
+                if (rolesWithActiveUsers.Count > 0)
+                {
+                    return BadRequest(new
+                    {
+                        message = "Cannot delete some roles as they are assigned to active users",
+                        rolesWithActiveUsers = rolesWithActiveUsers,
+                        totalRolesRequested = roleIds.Length,
+                        rolesWithActiveUsers_Count = rolesWithActiveUsers.Count
+                    });
+                }
+
+                // Soft delete all roles (set IsActive = false)
+                foreach (var role in rolesToDelete)
+                {
+                    role.IsActive = false;
+                    role.UpdatedDate = DateTime.UtcNow;
+                    role.UpdatedBy = 1; // You might get this from JWT token or current user context
+                }
+
+                await _context.SaveChangesAsync();
+
+                return Ok(new
+                {
+                    message = $"Successfully deleted {rolesToDelete.Count} role(s)",
+                    deletedRoles = rolesToDelete.Select(r => new { r.RoleId, r.RoleName }).ToList()
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Error deleting roles", error = ex.Message });
+            }
+        }
+
+        [HttpPut("RestoreRole/{id}")]
+        public async Task<IActionResult> RestoreRoleAsync(int id)
+        {
+            try
+            {
+                var role = await _context.Roles.FirstOrDefaultAsync(r => r.RoleId == id);
+
+                if (role == null)
+                {
+                    return NotFound(new { message = "Role not found" });
+                }
+
+                role.IsActive = true;
+                role.UpdatedDate = DateTime.UtcNow;
+                role.UpdatedBy = 1; // You might get this from JWT token
+
+                await _context.SaveChangesAsync();
+
+                return Ok(new { message = "Role restored successfully" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Error restoring role", error = ex.Message });
+            }
+        }
+
+        [HttpPut("RestoreMultipleRoles")]
+        public async Task<IActionResult> RestoreMultipleRolesAsync([FromBody] int[] roleIds)
+        {
+            try
+            {
+                if (roleIds == null || roleIds.Length == 0)
+                {
+                    return BadRequest(new { message = "No role IDs provided" });
+                }
+
+                var roles = await _context.Roles
+                    .Where(r => roleIds.Contains(r.RoleId) && !r.IsActive)
+                    .ToListAsync();
+
+                if (roles.Count == 0)
+                {
+                    return NotFound(new { message = "No inactive roles found with the provided IDs" });
+                }
+
+                foreach (var role in roles)
+                {
+                    role.IsActive = true;
+                    role.UpdatedDate = DateTime.UtcNow;
+                    role.UpdatedBy = 1; // You might get this from JWT token
+                }
+
+                await _context.SaveChangesAsync();
+
+                return Ok(new
+                {
+                    message = $"Successfully restored {roles.Count} role(s)",
+                    restoredRoles = roles.Select(r => new { r.RoleId, r.RoleName }).ToList()
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Error restoring roles", error = ex.Message });
+            }
+        }
+
         [HttpGet("GetRolePermissions/{roleId}")]
-        public async Task<IActionResult> GetRolePermissions(int roleId)
+        public async Task<IActionResult> GetRolePermissionsAsync(int roleId)
         {
             try
             {
@@ -353,7 +500,7 @@ namespace PerBrain.Controllers.Roles
         }
 
         [HttpPost("AssignPermission")]
-        public async Task<IActionResult> AssignPermission([FromBody] AssignPermissionDto assignDto)
+        public async Task<IActionResult> AssignPermissionAsync([FromBody] AssignPermissionDto assignDto)
         {
             try
             {
@@ -386,7 +533,7 @@ namespace PerBrain.Controllers.Roles
         }
 
         [HttpDelete("RemovePermission/{roleId}/{permissionId}")]
-        public async Task<IActionResult> RemovePermission(int roleId, int permissionId)
+        public async Task<IActionResult> RemovePermissionAsync(int roleId, int permissionId)
         {
             try
             {
