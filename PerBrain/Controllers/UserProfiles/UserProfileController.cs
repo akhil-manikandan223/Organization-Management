@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PerBrain.Model;
 using PerBrain.Model.UserProfiles;
 using System.Security.Cryptography.X509Certificates;
@@ -49,10 +50,14 @@ namespace PerBrain.Controllers.UserProfiles
         }
 
         [HttpGet("GetAllUsers")]
-        public IActionResult GetAllUsers()
+        public async Task<IActionResult> GetAllUsers()
         {
-            var list = _context.UserProfiles.ToList();
-            return Ok(list);
+            var users = await _context.UserProfiles
+                .Include(u => u.UserRoles.Where(ur => ur.IsActive))
+                .ThenInclude(ur => ur.Role)
+                .ToListAsync();
+
+            return Ok(users);
         }
 
         [HttpDelete("DeleteUser/{id}")]
@@ -67,20 +72,20 @@ namespace PerBrain.Controllers.UserProfiles
                 }
 
                 // Check if user is already inactive
-                if (!user.isActive)
+                if (!user.IsActive)
                 {
                     return BadRequest($"User with ID {id} is already inactive");
                 }
 
                 // Soft delete: Set isActive to false instead of removing
-                user.isActive = false;
+                user.IsActive = false;
                 _context.SaveChanges();
 
                 return Ok(new
                 {
                     message = "User deactivated successfully",
                     deactivatedUserId = id,
-                    user.isActive
+                    user.IsActive
                 });
             }
             catch (Exception ex)
@@ -102,7 +107,7 @@ namespace PerBrain.Controllers.UserProfiles
 
                 // Find all active users with the provided IDs
                 var usersToDeactivate = _context.UserProfiles
-                    .Where(u => userIds.Contains(u.UserId) && u.isActive)
+                    .Where(u => userIds.Contains(u.UserId) && u.IsActive)
                     .ToList();
 
                 if (usersToDeactivate.Count == 0)
@@ -113,7 +118,7 @@ namespace PerBrain.Controllers.UserProfiles
                 // Set isActive to false for all found users
                 foreach (var user in usersToDeactivate)
                 {
-                    user.isActive = false;
+                    user.IsActive = false;
                 }
 
                 _context.SaveChanges();

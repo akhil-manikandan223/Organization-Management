@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PerBrain.Model;
 
@@ -11,9 +12,11 @@ using PerBrain.Model;
 namespace PerBrain.Migrations
 {
     [DbContext(typeof(PerBrainDbContext))]
-    partial class PerBrainDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251004051705_AddRoleBasedPermissionSystem")]
+    partial class AddRoleBasedPermissionSystem
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -103,7 +106,7 @@ namespace PerBrain.Migrations
                         new
                         {
                             PermissionId = 1,
-                            CreatedDate = new DateTime(2025, 10, 4, 5, 31, 51, 118, DateTimeKind.Utc).AddTicks(4862),
+                            CreatedDate = new DateTime(2025, 10, 4, 5, 17, 5, 220, DateTimeKind.Utc).AddTicks(8452),
                             Description = "Ability to view user list and details",
                             IsActive = true,
                             Module = "Users",
@@ -113,7 +116,7 @@ namespace PerBrain.Migrations
                         new
                         {
                             PermissionId = 2,
-                            CreatedDate = new DateTime(2025, 10, 4, 5, 31, 51, 118, DateTimeKind.Utc).AddTicks(4863),
+                            CreatedDate = new DateTime(2025, 10, 4, 5, 17, 5, 220, DateTimeKind.Utc).AddTicks(8454),
                             Description = "Ability to create new users",
                             IsActive = true,
                             Module = "Users",
@@ -123,7 +126,7 @@ namespace PerBrain.Migrations
                         new
                         {
                             PermissionId = 3,
-                            CreatedDate = new DateTime(2025, 10, 4, 5, 31, 51, 118, DateTimeKind.Utc).AddTicks(4865),
+                            CreatedDate = new DateTime(2025, 10, 4, 5, 17, 5, 220, DateTimeKind.Utc).AddTicks(8455),
                             Description = "Ability to edit existing users",
                             IsActive = true,
                             Module = "Users",
@@ -133,7 +136,7 @@ namespace PerBrain.Migrations
                         new
                         {
                             PermissionId = 4,
-                            CreatedDate = new DateTime(2025, 10, 4, 5, 31, 51, 118, DateTimeKind.Utc).AddTicks(4866),
+                            CreatedDate = new DateTime(2025, 10, 4, 5, 17, 5, 220, DateTimeKind.Utc).AddTicks(8457),
                             Description = "Ability to delete users",
                             IsActive = true,
                             Module = "Users",
@@ -143,7 +146,7 @@ namespace PerBrain.Migrations
                         new
                         {
                             PermissionId = 5,
-                            CreatedDate = new DateTime(2025, 10, 4, 5, 31, 51, 118, DateTimeKind.Utc).AddTicks(4867),
+                            CreatedDate = new DateTime(2025, 10, 4, 5, 17, 5, 220, DateTimeKind.Utc).AddTicks(8458),
                             Description = "Ability to access the main dashboard",
                             IsActive = true,
                             Module = "Dashboard",
@@ -153,7 +156,7 @@ namespace PerBrain.Migrations
                         new
                         {
                             PermissionId = 6,
-                            CreatedDate = new DateTime(2025, 10, 4, 5, 31, 51, 118, DateTimeKind.Utc).AddTicks(4869),
+                            CreatedDate = new DateTime(2025, 10, 4, 5, 17, 5, 220, DateTimeKind.Utc).AddTicks(8459),
                             Description = "Ability to view reports",
                             IsActive = true,
                             Module = "Reports",
@@ -163,7 +166,7 @@ namespace PerBrain.Migrations
                         new
                         {
                             PermissionId = 7,
-                            CreatedDate = new DateTime(2025, 10, 4, 5, 31, 51, 118, DateTimeKind.Utc).AddTicks(4870),
+                            CreatedDate = new DateTime(2025, 10, 4, 5, 17, 5, 220, DateTimeKind.Utc).AddTicks(8461),
                             Description = "Ability to create and manage roles and permissions",
                             IsActive = true,
                             Module = "Administration",
@@ -173,7 +176,7 @@ namespace PerBrain.Migrations
                         new
                         {
                             PermissionId = 8,
-                            CreatedDate = new DateTime(2025, 10, 4, 5, 31, 51, 118, DateTimeKind.Utc).AddTicks(4871),
+                            CreatedDate = new DateTime(2025, 10, 4, 5, 17, 5, 220, DateTimeKind.Utc).AddTicks(8462),
                             Description = "Ability to view teams",
                             IsActive = true,
                             Module = "Teams",
@@ -183,7 +186,7 @@ namespace PerBrain.Migrations
                         new
                         {
                             PermissionId = 9,
-                            CreatedDate = new DateTime(2025, 10, 4, 5, 31, 51, 118, DateTimeKind.Utc).AddTicks(4873),
+                            CreatedDate = new DateTime(2025, 10, 4, 5, 17, 5, 220, DateTimeKind.Utc).AddTicks(8463),
                             Description = "Ability to view workspaces",
                             IsActive = true,
                             Module = "Workspaces",
@@ -227,189 +230,189 @@ namespace PerBrain.Migrations
                         new
                         {
                             RolePermissionId = 1,
-                            AssignedDate = new DateTime(2025, 10, 4, 5, 31, 51, 118, DateTimeKind.Utc).AddTicks(5078),
+                            AssignedDate = new DateTime(2025, 10, 4, 5, 17, 5, 220, DateTimeKind.Utc).AddTicks(8615),
                             PermissionId = 1,
                             RoleId = 1
                         },
                         new
                         {
                             RolePermissionId = 2,
-                            AssignedDate = new DateTime(2025, 10, 4, 5, 31, 51, 118, DateTimeKind.Utc).AddTicks(5079),
+                            AssignedDate = new DateTime(2025, 10, 4, 5, 17, 5, 220, DateTimeKind.Utc).AddTicks(8616),
                             PermissionId = 2,
                             RoleId = 1
                         },
                         new
                         {
                             RolePermissionId = 3,
-                            AssignedDate = new DateTime(2025, 10, 4, 5, 31, 51, 118, DateTimeKind.Utc).AddTicks(5080),
+                            AssignedDate = new DateTime(2025, 10, 4, 5, 17, 5, 220, DateTimeKind.Utc).AddTicks(8617),
                             PermissionId = 3,
                             RoleId = 1
                         },
                         new
                         {
                             RolePermissionId = 4,
-                            AssignedDate = new DateTime(2025, 10, 4, 5, 31, 51, 118, DateTimeKind.Utc).AddTicks(5081),
+                            AssignedDate = new DateTime(2025, 10, 4, 5, 17, 5, 220, DateTimeKind.Utc).AddTicks(8618),
                             PermissionId = 4,
                             RoleId = 1
                         },
                         new
                         {
                             RolePermissionId = 5,
-                            AssignedDate = new DateTime(2025, 10, 4, 5, 31, 51, 118, DateTimeKind.Utc).AddTicks(5082),
+                            AssignedDate = new DateTime(2025, 10, 4, 5, 17, 5, 220, DateTimeKind.Utc).AddTicks(8619),
                             PermissionId = 5,
                             RoleId = 1
                         },
                         new
                         {
                             RolePermissionId = 6,
-                            AssignedDate = new DateTime(2025, 10, 4, 5, 31, 51, 118, DateTimeKind.Utc).AddTicks(5083),
+                            AssignedDate = new DateTime(2025, 10, 4, 5, 17, 5, 220, DateTimeKind.Utc).AddTicks(8620),
                             PermissionId = 6,
                             RoleId = 1
                         },
                         new
                         {
                             RolePermissionId = 7,
-                            AssignedDate = new DateTime(2025, 10, 4, 5, 31, 51, 118, DateTimeKind.Utc).AddTicks(5084),
+                            AssignedDate = new DateTime(2025, 10, 4, 5, 17, 5, 220, DateTimeKind.Utc).AddTicks(8621),
                             PermissionId = 7,
                             RoleId = 1
                         },
                         new
                         {
                             RolePermissionId = 8,
-                            AssignedDate = new DateTime(2025, 10, 4, 5, 31, 51, 118, DateTimeKind.Utc).AddTicks(5085),
+                            AssignedDate = new DateTime(2025, 10, 4, 5, 17, 5, 220, DateTimeKind.Utc).AddTicks(8622),
                             PermissionId = 8,
                             RoleId = 1
                         },
                         new
                         {
                             RolePermissionId = 9,
-                            AssignedDate = new DateTime(2025, 10, 4, 5, 31, 51, 118, DateTimeKind.Utc).AddTicks(5086),
+                            AssignedDate = new DateTime(2025, 10, 4, 5, 17, 5, 220, DateTimeKind.Utc).AddTicks(8624),
                             PermissionId = 9,
                             RoleId = 1
                         },
                         new
                         {
                             RolePermissionId = 10,
-                            AssignedDate = new DateTime(2025, 10, 4, 5, 31, 51, 118, DateTimeKind.Utc).AddTicks(5088),
+                            AssignedDate = new DateTime(2025, 10, 4, 5, 17, 5, 220, DateTimeKind.Utc).AddTicks(8625),
                             PermissionId = 1,
                             RoleId = 2
                         },
                         new
                         {
                             RolePermissionId = 11,
-                            AssignedDate = new DateTime(2025, 10, 4, 5, 31, 51, 118, DateTimeKind.Utc).AddTicks(5089),
+                            AssignedDate = new DateTime(2025, 10, 4, 5, 17, 5, 220, DateTimeKind.Utc).AddTicks(8667),
                             PermissionId = 2,
                             RoleId = 2
                         },
                         new
                         {
                             RolePermissionId = 12,
-                            AssignedDate = new DateTime(2025, 10, 4, 5, 31, 51, 118, DateTimeKind.Utc).AddTicks(5090),
+                            AssignedDate = new DateTime(2025, 10, 4, 5, 17, 5, 220, DateTimeKind.Utc).AddTicks(8668),
                             PermissionId = 3,
                             RoleId = 2
                         },
                         new
                         {
                             RolePermissionId = 13,
-                            AssignedDate = new DateTime(2025, 10, 4, 5, 31, 51, 118, DateTimeKind.Utc).AddTicks(5091),
+                            AssignedDate = new DateTime(2025, 10, 4, 5, 17, 5, 220, DateTimeKind.Utc).AddTicks(8669),
                             PermissionId = 4,
                             RoleId = 2
                         },
                         new
                         {
                             RolePermissionId = 14,
-                            AssignedDate = new DateTime(2025, 10, 4, 5, 31, 51, 118, DateTimeKind.Utc).AddTicks(5092),
+                            AssignedDate = new DateTime(2025, 10, 4, 5, 17, 5, 220, DateTimeKind.Utc).AddTicks(8670),
                             PermissionId = 5,
                             RoleId = 2
                         },
                         new
                         {
                             RolePermissionId = 15,
-                            AssignedDate = new DateTime(2025, 10, 4, 5, 31, 51, 118, DateTimeKind.Utc).AddTicks(5093),
+                            AssignedDate = new DateTime(2025, 10, 4, 5, 17, 5, 220, DateTimeKind.Utc).AddTicks(8671),
                             PermissionId = 6,
                             RoleId = 2
                         },
                         new
                         {
                             RolePermissionId = 16,
-                            AssignedDate = new DateTime(2025, 10, 4, 5, 31, 51, 118, DateTimeKind.Utc).AddTicks(5094),
+                            AssignedDate = new DateTime(2025, 10, 4, 5, 17, 5, 220, DateTimeKind.Utc).AddTicks(8672),
                             PermissionId = 8,
                             RoleId = 2
                         },
                         new
                         {
                             RolePermissionId = 17,
-                            AssignedDate = new DateTime(2025, 10, 4, 5, 31, 51, 118, DateTimeKind.Utc).AddTicks(5095),
+                            AssignedDate = new DateTime(2025, 10, 4, 5, 17, 5, 220, DateTimeKind.Utc).AddTicks(8673),
                             PermissionId = 9,
                             RoleId = 2
                         },
                         new
                         {
                             RolePermissionId = 18,
-                            AssignedDate = new DateTime(2025, 10, 4, 5, 31, 51, 118, DateTimeKind.Utc).AddTicks(5096),
+                            AssignedDate = new DateTime(2025, 10, 4, 5, 17, 5, 220, DateTimeKind.Utc).AddTicks(8675),
                             PermissionId = 1,
                             RoleId = 3
                         },
                         new
                         {
                             RolePermissionId = 19,
-                            AssignedDate = new DateTime(2025, 10, 4, 5, 31, 51, 118, DateTimeKind.Utc).AddTicks(5097),
+                            AssignedDate = new DateTime(2025, 10, 4, 5, 17, 5, 220, DateTimeKind.Utc).AddTicks(8676),
                             PermissionId = 3,
                             RoleId = 3
                         },
                         new
                         {
                             RolePermissionId = 20,
-                            AssignedDate = new DateTime(2025, 10, 4, 5, 31, 51, 118, DateTimeKind.Utc).AddTicks(5098),
+                            AssignedDate = new DateTime(2025, 10, 4, 5, 17, 5, 220, DateTimeKind.Utc).AddTicks(8677),
                             PermissionId = 5,
                             RoleId = 3
                         },
                         new
                         {
                             RolePermissionId = 21,
-                            AssignedDate = new DateTime(2025, 10, 4, 5, 31, 51, 118, DateTimeKind.Utc).AddTicks(5099),
+                            AssignedDate = new DateTime(2025, 10, 4, 5, 17, 5, 220, DateTimeKind.Utc).AddTicks(8677),
                             PermissionId = 6,
                             RoleId = 3
                         },
                         new
                         {
                             RolePermissionId = 22,
-                            AssignedDate = new DateTime(2025, 10, 4, 5, 31, 51, 118, DateTimeKind.Utc).AddTicks(5100),
+                            AssignedDate = new DateTime(2025, 10, 4, 5, 17, 5, 220, DateTimeKind.Utc).AddTicks(8678),
                             PermissionId = 8,
                             RoleId = 3
                         },
                         new
                         {
                             RolePermissionId = 23,
-                            AssignedDate = new DateTime(2025, 10, 4, 5, 31, 51, 118, DateTimeKind.Utc).AddTicks(5101),
+                            AssignedDate = new DateTime(2025, 10, 4, 5, 17, 5, 220, DateTimeKind.Utc).AddTicks(8680),
                             PermissionId = 9,
                             RoleId = 3
                         },
                         new
                         {
                             RolePermissionId = 24,
-                            AssignedDate = new DateTime(2025, 10, 4, 5, 31, 51, 118, DateTimeKind.Utc).AddTicks(5102),
+                            AssignedDate = new DateTime(2025, 10, 4, 5, 17, 5, 220, DateTimeKind.Utc).AddTicks(8680),
                             PermissionId = 1,
                             RoleId = 4
                         },
                         new
                         {
                             RolePermissionId = 25,
-                            AssignedDate = new DateTime(2025, 10, 4, 5, 31, 51, 118, DateTimeKind.Utc).AddTicks(5103),
+                            AssignedDate = new DateTime(2025, 10, 4, 5, 17, 5, 220, DateTimeKind.Utc).AddTicks(8681),
                             PermissionId = 5,
                             RoleId = 4
                         },
                         new
                         {
                             RolePermissionId = 26,
-                            AssignedDate = new DateTime(2025, 10, 4, 5, 31, 51, 118, DateTimeKind.Utc).AddTicks(5104),
+                            AssignedDate = new DateTime(2025, 10, 4, 5, 17, 5, 220, DateTimeKind.Utc).AddTicks(8682),
                             PermissionId = 8,
                             RoleId = 4
                         },
                         new
                         {
                             RolePermissionId = 27,
-                            AssignedDate = new DateTime(2025, 10, 4, 5, 31, 51, 118, DateTimeKind.Utc).AddTicks(5106),
+                            AssignedDate = new DateTime(2025, 10, 4, 5, 17, 5, 220, DateTimeKind.Utc).AddTicks(8683),
                             PermissionId = 5,
                             RoleId = 5
                         });
@@ -462,7 +465,7 @@ namespace PerBrain.Migrations
                         new
                         {
                             RoleId = 1,
-                            CreatedDate = new DateTime(2025, 10, 4, 5, 31, 51, 118, DateTimeKind.Utc).AddTicks(5003),
+                            CreatedDate = new DateTime(2025, 10, 4, 5, 17, 5, 220, DateTimeKind.Utc).AddTicks(8591),
                             Description = "Full system access with all permissions",
                             IsActive = true,
                             RoleName = "Super Admin"
@@ -470,7 +473,7 @@ namespace PerBrain.Migrations
                         new
                         {
                             RoleId = 2,
-                            CreatedDate = new DateTime(2025, 10, 4, 5, 31, 51, 118, DateTimeKind.Utc).AddTicks(5007),
+                            CreatedDate = new DateTime(2025, 10, 4, 5, 17, 5, 220, DateTimeKind.Utc).AddTicks(8592),
                             Description = "Administrative access without role management",
                             IsActive = true,
                             RoleName = "Admin"
@@ -478,7 +481,7 @@ namespace PerBrain.Migrations
                         new
                         {
                             RoleId = 3,
-                            CreatedDate = new DateTime(2025, 10, 4, 5, 31, 51, 118, DateTimeKind.Utc).AddTicks(5009),
+                            CreatedDate = new DateTime(2025, 10, 4, 5, 17, 5, 220, DateTimeKind.Utc).AddTicks(8594),
                             Description = "Management level access to users and reports",
                             IsActive = true,
                             RoleName = "Manager"
@@ -486,7 +489,7 @@ namespace PerBrain.Migrations
                         new
                         {
                             RoleId = 4,
-                            CreatedDate = new DateTime(2025, 10, 4, 5, 31, 51, 118, DateTimeKind.Utc).AddTicks(5010),
+                            CreatedDate = new DateTime(2025, 10, 4, 5, 17, 5, 220, DateTimeKind.Utc).AddTicks(8595),
                             Description = "Team leadership access",
                             IsActive = true,
                             RoleName = "Team Lead"
@@ -494,7 +497,7 @@ namespace PerBrain.Migrations
                         new
                         {
                             RoleId = 5,
-                            CreatedDate = new DateTime(2025, 10, 4, 5, 31, 51, 118, DateTimeKind.Utc).AddTicks(5057),
+                            CreatedDate = new DateTime(2025, 10, 4, 5, 17, 5, 220, DateTimeKind.Utc).AddTicks(8596),
                             Description = "Basic user access to dashboard and assigned areas",
                             IsActive = true,
                             RoleName = "User"
@@ -600,6 +603,9 @@ namespace PerBrain.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
+                    b.Property<DateTime?>("HireDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<bool>("IsActive")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
@@ -608,9 +614,6 @@ namespace PerBrain.Migrations
                     b.Property<string>("JobTitle")
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
-
-                    b.Property<DateTime?>("JoiningDate")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -646,6 +649,9 @@ namespace PerBrain.Migrations
                     b.Property<string>("ProfilePicture")
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
+
+                    b.Property<decimal?>("Salary")
+                        .HasColumnType("decimal(10,2)");
 
                     b.Property<string>("State")
                         .HasMaxLength(100)
