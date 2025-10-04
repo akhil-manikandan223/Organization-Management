@@ -90,22 +90,18 @@ export class SystemUITableComponent {
   private getRouteTitle(): string {
     let route = this.activatedRoute;
 
-    // Navigate to the leaf route
     while (route.firstChild) {
       route = route.firstChild;
     }
 
-    // Check for title in route data (traditional approach)
     if (route.snapshot.data['title']) {
       return route.snapshot.data['title'];
     }
 
-    // Check for Angular 14+ title property
     if (route.snapshot.title) {
       return route.snapshot.title;
     }
 
-    // Fallback: try to get from parent routes
     let parent = route.parent;
     while (parent) {
       if (parent.snapshot.data['title']) {
@@ -150,7 +146,6 @@ export class SystemUITableComponent {
     return numSelected === numRows;
   }
 
-  // ADD THIS MISSING METHOD
   toggleAllRows() {
     if (this.isAllSelected()) {
       this.selection.clear();

@@ -9,6 +9,7 @@ import {
   TableConfig,
 } from '../../system-ui/system-ui-models/models';
 import { LoadingScreen5 } from '../../utils/loading-screens/loading-screen-5/loading-screen-5';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-teams',
@@ -33,7 +34,10 @@ export class Teams implements OnInit {
 
   tableConfig!: TableConfig;
 
-  constructor(private userProfileService: UserProfileService) {
+  constructor(
+    private userProfileService: UserProfileService,
+    private cdr: ChangeDetectorRef
+  ) {
     this.tableConfig = {
       deleteEndpoint: 'UserProfile/DeleteUser',
       bulkDeleteEndpoint: 'UserProfile/DeleteMultipleUsers',
@@ -54,6 +58,7 @@ export class Teams implements OnInit {
 
   ngAfterViewInit() {
     this.initializeColumns();
+    this.cdr.detectChanges();
   }
 
   initializeColumns() {
@@ -85,6 +90,7 @@ export class Teams implements OnInit {
   getAllUsers() {
     this.userProfileService.fetchAllUser().subscribe((response) => {
       this.allUsers = response;
+      this.cdr.detectChanges();
     });
   }
 
