@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using PerBrain.Model;
 using PerBrain.Model.UserProfiles;
 using System.Security.Cryptography.X509Certificates;
@@ -50,14 +49,10 @@ namespace PerBrain.Controllers.UserProfiles
         }
 
         [HttpGet("GetAllUsers")]
-        public async Task<IActionResult> GetAllUsers()
+        public IActionResult GetAllUsers()
         {
-            var users = await _context.UserProfiles
-                .Include(u => u.UserRoles.Where(ur => ur.IsActive))
-                .ThenInclude(ur => ur.Role)
-                .ToListAsync();
-
-            return Ok(users);
+            var list = _context.UserProfiles.ToList();
+            return Ok(list);
         }
 
         [HttpDelete("DeleteUser/{id}")]

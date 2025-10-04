@@ -1,0 +1,36 @@
+@if (allRoles.length && columns.length) {
+<system-ui-table
+  [columns]="columns"
+  [data]="allRoles"
+  [config]="tableConfig"
+  (dataChanged)="onDataChanged($event)"
+>
+</system-ui-table>
+} @else {
+<div class="spinner-container">
+  <app-loading-screen-5></app-loading-screen-5>
+</div>
+}
+
+<ng-template #createdUserTemplate let-row>
+  <div>
+    @if (row.createdByUser) {
+    <div class="user-info">
+      <span class="user-name">{{ row.createdByUser.fullName }}</span>
+      <small class="user-email">{{ row.createdByUser.email }}</small>
+    </div>
+    } @else {
+    <span class="no-info">N/A</span>
+    }
+  </div>
+</ng-template>
+
+<ng-template #isActiveStateTemplate let-row>
+  <div
+    class="state-base"
+    [ngClass]="row.isActive ? 'active-state' : 'inactive-state'"
+  >
+    <mat-icon>{{ row.isActive ? "check_circle" : "cancel" }}</mat-icon>
+    <span>{{ row.isActive ? "Active" : "Inactive" }}</span>
+  </div>
+</ng-template>

@@ -13,14 +13,16 @@ export interface ColumnDef {
 }
 
 export interface TableConfig {
-  deleteEndpoint?: string;
-  bulkDeleteEndpoint?: string;
-  editRoute?: string;
+  deleteEndpoint: string;
+  bulkDeleteEndpoint: string;
+  editRoute: string;
   idField: string;
-  service?: any;
+  service: any;
+  deleteMethodName?: string; // ✅ Add this
+  bulkDeleteMethodName?: string; // ✅ Add this
   filters?: {
     showStatusFilter?: boolean;
-    defaultStatus?: FilterStatus; // 'all' | 'active' | 'inactive'
+    defaultStatus?: FilterStatus;
     showSearchFilter?: boolean;
   };
 }

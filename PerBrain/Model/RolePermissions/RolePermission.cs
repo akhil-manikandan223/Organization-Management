@@ -3,6 +3,7 @@ using PerBrain.Model.Roles;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Security;
+using System.Text.Json.Serialization;
 
 namespace PerBrain.Model.RolePermissions
 {
@@ -22,6 +23,7 @@ namespace PerBrain.Model.RolePermissions
         public int? AssignedBy { get; set; }
 
         // Navigation properties
+        [JsonIgnore]
         public virtual Role Role { get; set; }
         public virtual Permission Permission { get; set; }
     }

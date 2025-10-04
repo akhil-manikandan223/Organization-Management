@@ -23,49 +23,85 @@ namespace PerBrain.Controllers.Roles
         {
             try
             {
-                var roles = await _context.Roles
+                // Get all roles with their related data
+                var rolesData = await _context.Roles
                     .Include(r => r.RolePermissions)
                     .ThenInclude(rp => rp.Permission)
                     .Include(r => r.UserRoles.Where(ur => ur.IsActive))
                     .ThenInclude(ur => ur.UserProfile)
-                    .Select(r => new
-                    {
-                        r.RoleId,
-                        r.RoleName,
-                        r.Description,
-                        r.IsActive,
-                        r.CreatedDate,
-                        r.UpdatedDate,
-
-                        // Count of users with this role
-                        UserCount = r.UserRoles.Count(ur => ur.IsActive),
-
-                        // Permissions assigned to this role
-                        Permissions = r.RolePermissions.Select(rp => new
-                        {
-                            rp.Permission.PermissionId,
-                            rp.Permission.PermissionName,
-                            rp.Permission.PermissionCode,
-                            rp.Permission.Module,
-                            rp.AssignedDate
-                        }).ToList(),
-
-                        // Users with this role (optional - might want to exclude for performance)
-                        Users = r.UserRoles
-                            .Where(ur => ur.IsActive)
-                            .Select(ur => new
-                            {
-                                ur.UserProfile.UserId,
-                                ur.UserProfile.FirstName,
-                                ur.UserProfile.LastName,
-                                ur.UserProfile.Email,
-                                ur.AssignedDate
-                            }).ToList()
-                    })
                     .OrderBy(r => r.RoleName)
                     .ToListAsync();
 
-                return Ok(roles);
+                // Get user lookup dictionary for creators/updaters
+                var userIds = rolesData
+                    .SelectMany(r => new[] { r.CreatedBy, r.UpdatedBy })
+                    .Where(id => id.HasValue)
+                    .Select(id => id.Value)
+                    .Distinct()
+                    .ToList();
+
+                var users = await _context.UserProfiles
+                    .Where(u => userIds.Contains(u.UserId))
+                    .Select(u => new
+                    {
+                        u.UserId,
+                        u.FirstName,
+                        u.LastName,
+                        u.Email,
+                        FullName = u.FirstName + " " + u.LastName
+                    })
+                    .ToListAsync();
+
+                var userLookup = users.ToDictionary(u => u.UserId);
+
+                // Map the results
+                var result = rolesData.Select(r => new
+                {
+                    r.RoleId,
+                    r.RoleName,
+                    r.Description,
+                    r.IsActive,
+                    r.CreatedDate,
+                    r.UpdatedDate,
+                    r.CreatedBy,
+
+                    // Creator information
+                    CreatedByUser = r.CreatedBy.HasValue && userLookup.ContainsKey(r.CreatedBy.Value)
+                        ? userLookup[r.CreatedBy.Value]
+                        : null,
+
+                    // Updater information
+                    UpdatedByUser = r.UpdatedBy.HasValue && userLookup.ContainsKey(r.UpdatedBy.Value)
+                        ? userLookup[r.UpdatedBy.Value]
+                        : null,
+
+                    // Count of users with this role
+                    UserCount = r.UserRoles.Count(ur => ur.IsActive),
+
+                    // Permissions assigned to this role
+                    Permissions = r.RolePermissions.Select(rp => new
+                    {
+                        rp.Permission.PermissionId,
+                        rp.Permission.PermissionName,
+                        rp.Permission.PermissionCode,
+                        rp.Permission.Module,
+                        rp.AssignedDate
+                    }).ToList(),
+
+                    // Users with this role
+                    Users = r.UserRoles
+                        .Where(ur => ur.IsActive)
+                        .Select(ur => new
+                        {
+                            ur.UserProfile.UserId,
+                            ur.UserProfile.FirstName,
+                            ur.UserProfile.LastName,
+                            ur.UserProfile.Email,
+                            ur.AssignedDate
+                        }).ToList()
+                }).ToList();
+
+                return Ok(result);
             }
             catch (Exception ex)
             {

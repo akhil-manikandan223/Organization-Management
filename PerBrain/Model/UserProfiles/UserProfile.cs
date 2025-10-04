@@ -1,6 +1,7 @@
 ﻿using PerBrain.Model.UserRoles;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace PerBrain.Model.UserProfiles
 {
@@ -48,6 +49,7 @@ namespace PerBrain.Model.UserProfiles
         public int? UpdatedBy { get; set; }
 
         // Navigation property for roles
+        [JsonIgnore]
         public virtual ICollection<UserRole> UserRoles { get; set; } = new List<UserRole>();
     }
 

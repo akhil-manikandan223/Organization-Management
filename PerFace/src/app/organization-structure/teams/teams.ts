@@ -44,6 +44,8 @@ export class Teams implements OnInit {
       editRoute: '/edit-user',
       idField: 'userId',
       service: this.userProfileService,
+      deleteMethodName: 'deleteUserById',
+      bulkDeleteMethodName: 'deleteMultipleUsers',
       filters: {
         showStatusFilter: true,
         defaultStatus: 'active',
@@ -89,6 +91,7 @@ export class Teams implements OnInit {
   getAllUsers() {
     this.userProfileService.fetchAllUser().subscribe((response) => {
       this.allUsers = [...response];
+      console.log('all roles', this.allUsers);
       this.cdr.detectChanges();
     });
   }

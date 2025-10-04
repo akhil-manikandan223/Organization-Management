@@ -1,6 +1,7 @@
 ﻿using PerBrain.Model.RolePermissions;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace PerBrain.Model.Permissions
 {
@@ -26,6 +27,7 @@ namespace PerBrain.Model.Permissions
         public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
 
         // Navigation properties
+        [JsonIgnore]
         public virtual ICollection<RolePermission> RolePermissions { get; set; } = new List<RolePermission>();
     }
 }

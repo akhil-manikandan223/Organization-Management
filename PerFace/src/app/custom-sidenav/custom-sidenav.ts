@@ -29,8 +29,13 @@ export class CustomSidenav {
       route: 'admin',
       subItems: [
         {
-          icon: 'add_moderator',
+          icon: 'assignment_ind',
           label: 'Roles',
+          route: 'roles',
+        },
+        {
+          icon: 'add_moderator',
+          label: 'User Roles',
           route: 'user-roles',
         },
         {

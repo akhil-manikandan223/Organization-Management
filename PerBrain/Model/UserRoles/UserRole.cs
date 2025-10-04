@@ -2,6 +2,7 @@
 using PerBrain.Model.UserProfiles;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace PerBrain.Model.UserRoles
 {
@@ -22,6 +23,7 @@ namespace PerBrain.Model.UserRoles
         public bool IsActive { get; set; } = true;
 
         // Navigation properties
+        [JsonIgnore]
         public virtual UserProfile UserProfile { get; set; }
         public virtual Role Role { get; set; }
     }

@@ -270,28 +270,16 @@ export class SystemUITableComponent {
     if (!this.config.service) {
       return;
     }
-    const serviceProps = Object.getOwnPropertyNames(this.config.service);
-    const serviceMethods = Object.getOwnPropertyNames(
-      Object.getPrototypeOf(this.config.service)
-    );
 
-    const possibleMethods = ['deleteUserById', 'deleteById', 'delete'];
-    let deleteMethod: Function | null = null;
-    let methodName = '';
+    const methodName = this.config.deleteMethodName || 'deleteById';
+    const deleteMethod = this.config.service[methodName];
 
-    for (const method of possibleMethods) {
-      if (typeof this.config.service[method] === 'function') {
-        deleteMethod = this.config.service[method].bind(this.config.service);
-        methodName = method;
-        break;
-      }
-    }
-
-    if (!deleteMethod) {
+    if (typeof deleteMethod !== 'function') {
+      console.error(`Method ${methodName} not found in service`);
       return;
     }
 
-    deleteMethod(id).subscribe({
+    deleteMethod.call(this.config.service, id).subscribe({
       next: (response: any) => {
         const updatedData = this.data.filter(
           (item) => item[this.config.idField] !== id
@@ -305,20 +293,30 @@ export class SystemUITableComponent {
   }
 
   bulkDeleteItems(ids: any[]) {
-    if (this.config.service.deleteMultipleUsers) {
-      this.config.service.deleteMultipleUsers(ids).subscribe({
-        next: (response: any) => {
-          const updatedData = this.data.filter(
-            (item) => !ids.includes(item[this.config.idField])
-          );
-          this.selection.clear();
-          this.dataChanged.emit(updatedData);
-        },
-        error: (error: any) => {
-          console.error('Error bulk deleting items:', error);
-        },
-      });
+    if (!this.config.service) {
+      return;
     }
+
+    const methodName = this.config.bulkDeleteMethodName || 'deleteMultiple';
+    const bulkDeleteMethod = this.config.service[methodName];
+
+    if (typeof bulkDeleteMethod !== 'function') {
+      console.error(`Method ${methodName} not found in service`);
+      return;
+    }
+
+    bulkDeleteMethod.call(this.config.service, ids).subscribe({
+      next: (response: any) => {
+        const updatedData = this.data.filter(
+          (item) => !ids.includes(item[this.config.idField])
+        );
+        this.selection.clear();
+        this.dataChanged.emit(updatedData);
+      },
+      error: (error: any) => {
+        console.error('Error bulk deleting items:', error);
+      },
+    });
   }
 
   private getFilteredDataByStatus(): any[] {
