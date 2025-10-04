@@ -58,7 +58,6 @@ export class Teams implements OnInit {
 
   ngAfterViewInit() {
     this.initializeColumns();
-    this.cdr.detectChanges();
   }
 
   initializeColumns() {
@@ -89,7 +88,7 @@ export class Teams implements OnInit {
 
   getAllUsers() {
     this.userProfileService.fetchAllUser().subscribe((response) => {
-      this.allUsers = response;
+      this.allUsers = [...response];
       this.cdr.detectChanges();
     });
   }

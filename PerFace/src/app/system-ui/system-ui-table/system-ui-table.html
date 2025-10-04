@@ -152,7 +152,11 @@
       ></tr>
       <tr
         mat-row
-        *matRowDef="let row; columns: displayedColumnsWithSelectAndActions"
+        *matRowDef="
+          let row;
+          columns: displayedColumnsWithSelectAndActions;
+          trackBy: trackById
+        "
       ></tr>
     </table>
   </div>

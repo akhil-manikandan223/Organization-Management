@@ -71,16 +71,25 @@ export class SystemUITableComponent {
   }
 
   ngOnChanges() {
-    this.filteredData = this.data;
-    this.applyCurrentFilter();
-    this.applyStatusFilter();
-    this.selection.clear();
-    this.dataSource.data = this.filteredData;
+    if (this.data && Array.isArray(this.data)) {
+      this.filteredData = [...this.data];
+      this.applyStatusFilter();
+      this.applyCurrentFilter();
+      this.selection.clear();
+      this.dataSource.data = this.filteredData;
+      if (this.paginator) {
+        this.dataSource.paginator = this.paginator;
+      }
+    }
   }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.paginator.pageSize = 20;
+  }
+
+  trackById(index: number, item: any) {
+    return item[this.config.idField] || index;
   }
 
   private setPageTitle(): void {
@@ -184,7 +193,7 @@ export class SystemUITableComponent {
 
   handleDelete(element: any) {
     const dialogData: ConfirmDialogData = {
-      title: 'Delete Confirmation',
+      title: 'Confirm Delete',
       message:
         'Are you sure you want to delete this item? This action cannot be undone.',
       cancelLabel: 'Cancel',
