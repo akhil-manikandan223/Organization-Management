@@ -222,7 +222,24 @@ export class SystemUITableComponent {
   handleEdit(element: any) {
     if (this.config.editRoute) {
       const id = element[this.config.idField];
-      window.location.href = `${this.config.editRoute}/${id}`;
+
+      console.log('Edit clicked!');
+      console.log('Element:', element);
+      console.log('ID extracted:', id);
+      console.log('Edit route:', this.config.editRoute);
+      console.log('Full route will be:', `${this.config.editRoute}/${id}`);
+
+      this.router.navigate([this.config.editRoute, id]).then(
+        (success) => {
+          console.log('Navigation success:', success);
+        },
+        (error) => {
+          console.error('Navigation failed:', error);
+        }
+      );
+    } else {
+      console.warn('Edit route not configured in table config');
+      this.snackbarService.showError('Edit functionality not available');
     }
   }
 

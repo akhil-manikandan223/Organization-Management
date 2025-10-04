@@ -41,7 +41,7 @@ export class Roles implements OnInit {
     this.tableConfig = {
       deleteEndpoint: 'Role/DeleteRole',
       bulkDeleteEndpoint: 'Role/DeleteMultipleRoles',
-      editRoute: '/edit-role',
+      editRoute: '/admin/edit-roles',
       idField: 'roleId',
       service: this.roleService,
       deleteMethodName: 'deleteRoleById',

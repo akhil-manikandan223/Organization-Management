@@ -7,7 +7,7 @@ import { Attendance } from './attendance/attendance';
 
 const routes: Routes = [
   {
-    path: 'profile',
+    path: 'profile/:id',
     component: ProfileManagement,
     data: { title: 'User Profile' },
   },

@@ -4,12 +4,18 @@ import { RouterModule, Routes } from '@angular/router';
 import { UserRoles } from './user-roles/user-roles';
 import { Permissions } from './permissions/permissions';
 import { Roles } from './roles/roles';
+import { EditRoles } from './edit-roles/edit-roles';
 
 const routes: Routes = [
   {
     path: 'roles',
     component: Roles,
     data: { title: 'Roles', iconClass: 'assignment_ind' },
+  },
+  {
+    path: 'edit-roles/:id',
+    component: EditRoles,
+    data: { title: 'Edit Role', iconClass: 'assignment_ind' },
   },
   {
     path: 'user-roles',

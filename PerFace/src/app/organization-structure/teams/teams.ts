@@ -41,7 +41,7 @@ export class Teams implements OnInit {
     this.tableConfig = {
       deleteEndpoint: 'UserProfile/DeleteUser',
       bulkDeleteEndpoint: 'UserProfile/DeleteMultipleUsers',
-      editRoute: '/edit-user',
+      editRoute: '/employee-management/profile',
       idField: 'userId',
       service: this.userProfileService,
       deleteMethodName: 'deleteUserById',
