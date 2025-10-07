@@ -49,6 +49,10 @@ export class Login {
     }
   }
 
+  onForgotPassword() {
+    console.log('Forgot password clicked');
+  }
+
   goToRegisterUser() {
     this.router.navigate(['/register']);
   }
