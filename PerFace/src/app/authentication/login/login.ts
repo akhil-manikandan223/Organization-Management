@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { MaterialModule } from '../../material.module';
 import {
@@ -17,6 +17,8 @@ import { AuthService } from '../../services/auth/auth';
   styleUrl: './login.scss',
 })
 export class Login {
+  hidePassword = signal(true);
+
   form: FormGroup;
   constructor(
     private router: Router,

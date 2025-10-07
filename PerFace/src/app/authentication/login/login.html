@@ -1,40 +1,25 @@
-<div class="container">
-  <img src="assets/svgs/login-background-3.svg" />
-</div>
+<div class="container"></div>
 
 <div class="container-wrapper">
   <div class="application-name">
     <img
       class="header-logo"
-      src="assets/app-logos/Persona-10.png"
+      src="assets/app-logos/header-logo.png"
       alt="App Logo"
     />
   </div>
 
-  <div class="login-form-container">
-    <form [formGroup]="form" (ngSubmit)="onSubmit()">
-      <div class="login-form-container-header">
-        <img
-          class="header-logo-in-login-container"
-          src="assets/app-logos/Persona-logo.png"
-          alt="App Logo"
-        />
-        <mat-divider [vertical]="true"></mat-divider>
-        <span
-          style="
-            text-align: center;
-            font-weight: 600;
-            color: #333;
-            font-size: 2rem;
-            margin-top: 16px;
-          "
-          >Sign in</span
-        >
-      </div>
+  <div class="login-container">
+    <img
+      class="header-logo"
+      src="assets/app-logos/Persona-logo.png"
+      alt="App Logo"
+    />
 
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <mat-form-field floatLabel="auto">
         <mat-label>Email</mat-label>
-        <input matInput formControlName="email" type="email" required />
+        <input matInput type="email" formControlName="email" required />
         <mat-icon matSuffix>email</mat-icon>
         @if (form.get('email')?.hasError('required')) {
         <mat-error>Email is required</mat-error>
@@ -45,22 +30,31 @@
 
       <mat-form-field floatLabel="auto">
         <mat-label>Password</mat-label>
-        <input matInput formControlName="password" required type="text" />
-        <mat-icon matSuffix>lock</mat-icon>
+        <input
+          matInput
+          formControlName="password"
+          [type]="hidePassword() ? 'password' : 'text'"
+        />
+        <button
+          mat-icon-button
+          matSuffix
+          type="button"
+          class="mr-1"
+          (click)="hidePassword.set(!hidePassword())"
+        >
+          <mat-icon>
+            {{ hidePassword() ? "visibility" : "visibility_off" }}
+          </mat-icon>
+        </button>
         @if (form.get('password')?.hasError('required')) {
         <mat-error>Password is required</mat-error>
         }
       </mat-form-field>
 
-      <div class="form-actions">
-        <button mat-raised-button type="submit">Login</button>
-        <button
-          mat-raised-button
-          class="sign-up-button"
-          (click)="goToRegisterUser()"
-        >
-          Sign Up
-        </button>
+      <button mat-flat-button type="submit">Login</button>
+      <div class="sub-text">
+        <span>Don't have an account?</span>
+        <a (click)="goToRegisterUser()">Sign-up</a>
       </div>
     </form>
   </div>
