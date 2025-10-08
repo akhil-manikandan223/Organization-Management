@@ -1,22 +1,22 @@
 import { Component, signal } from '@angular/core';
-import { Router } from '@angular/router';
-import { MaterialModule } from '../../material.module';
 import {
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { SnackbarNotification } from '../../shared/snackbar-notification';
+import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth/auth';
+import { SnackbarNotification } from '../../shared/snackbar-notification';
+import { MaterialModule } from '../../material.module';
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-reset-password',
   imports: [MaterialModule, ReactiveFormsModule],
-  templateUrl: './login.html',
-  styleUrl: './login.scss',
+  templateUrl: './reset-password.html',
+  styleUrl: './reset-password.scss',
 })
-export class Login {
+export class ResetPassword {
   hidePassword = signal(true);
 
   form: FormGroup;
@@ -27,8 +27,8 @@ export class Login {
     private snackbarNotification: SnackbarNotification
   ) {
     this.form = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
+      password: ['', [Validators.required, Validators.email]],
+      confirmPassword: ['', Validators.required],
     });
   }
 
@@ -53,7 +53,7 @@ export class Login {
     this.router.navigate(['/forgot-password']);
   }
 
-  goToRegisterUser() {
-    this.router.navigate(['/register']);
+  goToLogin() {
+    this.router.navigate(['/login']);
   }
 }

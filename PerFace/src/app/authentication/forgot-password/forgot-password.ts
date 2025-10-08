@@ -1,5 +1,4 @@
 import { Component, signal } from '@angular/core';
-import { Router } from '@angular/router';
 import { MaterialModule } from '../../material.module';
 import {
   FormBuilder,
@@ -7,16 +6,17 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { SnackbarNotification } from '../../shared/snackbar-notification';
+import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth/auth';
+import { SnackbarNotification } from '../../shared/snackbar-notification';
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-forgot-password',
   imports: [MaterialModule, ReactiveFormsModule],
-  templateUrl: './login.html',
-  styleUrl: './login.scss',
+  templateUrl: './forgot-password.html',
+  styleUrl: './forgot-password.scss',
 })
-export class Login {
+export class ForgotPassword {
   hidePassword = signal(true);
 
   form: FormGroup;
@@ -53,7 +53,7 @@ export class Login {
     this.router.navigate(['/forgot-password']);
   }
 
-  goToRegisterUser() {
-    this.router.navigate(['/register']);
+  goToLogin() {
+    this.router.navigate(['/login']);
   }
 }
