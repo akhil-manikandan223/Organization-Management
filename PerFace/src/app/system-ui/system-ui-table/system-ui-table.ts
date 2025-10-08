@@ -419,4 +419,71 @@ export class SystemUITableComponent {
     this.selectedStatus = event.value;
     this.applyStatusFilter();
   }
+
+  exportAsCSV() {
+    console.log('Exporting as CSV...');
+    // Implement CSV export logic here
+    this.performExport('csv');
+  }
+
+  exportAsPDF() {
+    console.log('Exporting as PDF...');
+    // Implement PDF export logic here
+    this.performExport('pdf');
+  }
+
+  exportAsExcel() {
+    console.log('Exporting as Excel...');
+    // Implement Excel export logic here
+    this.performExport('excel');
+  }
+
+  // Other menu actions
+  onRefresh() {
+    console.log('Refreshing table...');
+    // Implement refresh logic
+  }
+
+  onSettings() {
+    console.log('Opening settings...');
+    // Implement settings logic
+  }
+
+  onHelp() {
+    console.log('Opening help...');
+    // Implement help logic
+  }
+
+  private performExport(format: 'csv' | 'pdf' | 'excel') {
+    // Common export logic
+    switch (format) {
+      case 'csv':
+        // CSV export implementation
+        this.exportTableDataAsCSV();
+        break;
+      case 'pdf':
+        // PDF export implementation
+        this.exportTableDataAsPDF();
+        break;
+      case 'excel':
+        // Excel export implementation
+        this.exportTableDataAsExcel();
+        break;
+    }
+  }
+
+  private exportTableDataAsCSV() {
+    // Implement CSV export logic
+    // You can use libraries like Papa Parse or create manual CSV
+  }
+
+  private exportTableDataAsPDF() {
+    // Implement PDF export logic
+    // You can use libraries like jsPDF or PDFMake
+  }
+
+  private exportTableDataAsExcel() {
+    // Implement Excel export logic
+    // You can use libraries like SheetJS or ExcelJS
+  }
 }

@@ -61,9 +61,57 @@
         mat-icon-button
         class="more-selection-button"
         aria-label="More options"
+        [matMenuTriggerFor]="moreOptionsMenu"
       >
         <mat-icon>more_vert</mat-icon>
       </button>
+      <mat-menu #moreOptionsMenu="matMenu" class="more-options-menu">
+        <!-- Export submenu trigger -->
+        <button
+          mat-menu-item
+          [matMenuTriggerFor]="exportMenu"
+          class="export-menu-item"
+        >
+          <mat-icon>file_download</mat-icon>
+          <span>Export</span>
+        </button>
+
+        <!-- Other menu options -->
+        <button mat-menu-item (click)="onRefresh()">
+          <mat-icon>refresh</mat-icon>
+          <span>Refresh</span>
+        </button>
+
+        <button mat-menu-item (click)="onSettings()">
+          <mat-icon>settings</mat-icon>
+          <span>Settings</span>
+        </button>
+
+        <mat-divider></mat-divider>
+
+        <button mat-menu-item (click)="onHelp()">
+          <mat-icon>help_outline</mat-icon>
+          <span>Help</span>
+        </button>
+      </mat-menu>
+
+      <!-- Export submenu -->
+      <mat-menu #exportMenu="matMenu" class="export-submenu">
+        <button mat-menu-item (click)="exportAsCSV()" class="export-option">
+          <mat-icon>grid_on</mat-icon>
+          <span>Export as CSV</span>
+        </button>
+
+        <button mat-menu-item (click)="exportAsPDF()" class="export-option">
+          <mat-icon>picture_as_pdf</mat-icon>
+          <span>Export as PDF</span>
+        </button>
+
+        <button mat-menu-item (click)="exportAsExcel()" class="export-option">
+          <mat-icon>table_chart</mat-icon>
+          <span>Export as Excel</span>
+        </button>
+      </mat-menu>
     </div>
   </div>
 
