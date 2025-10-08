@@ -1,36 +1,22 @@
-<div class="container">
-  <img src="assets/svgs/login-background-3.svg" />
-</div>
+<div class="container"></div>
 
 <div class="container-wrapper">
   <div class="application-name">
     <img
       class="header-logo"
-      src="assets/app-logos/Persona-10.png"
+      src="assets/app-logos/header-logo.png"
       alt="App Logo"
     />
   </div>
 
-  <div class="login-form-container">
+  <div class="login-container">
+    <img
+      class="header-logo"
+      src="assets/app-logos/Persona-logo.png"
+      alt="App Logo"
+    />
+
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
-      <div class="login-form-container-header">
-        <img
-          class="header-logo-in-login-container"
-          src="assets/app-logos/Persona-logo.png"
-          alt="App Logo"
-        />
-        <mat-divider [vertical]="true"></mat-divider>
-        <span
-          style="
-            text-align: center;
-            font-weight: 600;
-            color: #333;
-            font-size: 2rem;
-            margin-top: 16px;
-          "
-          >Sign in</span
-        >
-      </div>
       <div class="form-row">
         <mat-form-field floatLabel="auto">
           <mat-label>First Name</mat-label>
@@ -135,10 +121,10 @@
         </mat-form-field>
       </div>
 
-      <div class="form-actions">
-        <button mat-raised-button class="sign-up-button" type="submit">
-          Sign Up
-        </button>
+      <button mat-flat-button type="submit">Sign-up</button>
+      <div class="sub-text">
+        <span>Already have an account?</span>
+        <a>Sign-in</a>
       </div>
     </form>
   </div>
