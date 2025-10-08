@@ -28,7 +28,7 @@
   height: 100vh;
   margin: 0;
   padding: 0;
-  overflow: hidden;
+  overflow: auto;
   box-sizing: border-box;
 }
 
@@ -42,7 +42,7 @@
 
 .login-container {
   width: 100%;
-  max-width: 400px;
+  max-width: 650px;
   margin: 0;
   padding: 1.5rem;
   background-color: #fff;
@@ -50,6 +50,8 @@
   display: flex;
   flex-direction: column;
   align-items: stretch;
+  max-height: 90vh;
+  overflow-y: auto;
 
   .header-logo {
     position: static;
@@ -64,6 +66,56 @@
   .form-row {
     display: flex;
     justify-content: space-between;
+    gap: 1rem;
+
+    mat-form-field {
+      flex: 1;
+    }
+  }
+
+  form {
+    margin-top: 20px;
+  }
+
+  .step-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 1.5rem;
+
+    button {
+      min-width: 120px;
+      max-width: 200px;
+      font-weight: 500;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.5rem;
+      transition: all 0.2s ease;
+
+      &[mat-flat-button] {
+        background-color: #3b82f6;
+        color: #fff;
+
+        &:hover:not(:disabled) {
+          background-color: #2563eb;
+        }
+
+        &:disabled {
+          background-color: #93c5fd;
+          cursor: not-allowed;
+        }
+      }
+
+      &[matStepperPrevious] {
+        background-color: #f3f4f6;
+        color: #374151;
+
+        &:hover {
+          background-color: #e5e7eb;
+          color: #fff;
+        }
+      }
+    }
   }
 
   .sub-text {
@@ -86,36 +138,42 @@
     }
   }
 
-  form {
-    display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
+  mat-form-field {
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
 
-    mat-form-field {
-      width: 100%;
+  ::ng-deep mat-form-field {
+    .mat-form-field-wrapper {
+      padding-bottom: 1.25rem;
     }
 
-    button[type="submit"],
-    button[mat-flat-button] {
-      width: 100%;
-      margin-top: 0.75rem;
-      background-color: #3b82f6;
-      color: #fff;
-      font-weight: 500;
-      border: none;
-      padding: 0.75rem;
-      border-radius: 0.5rem;
-      transition: all 0.2s ease;
-
-      &:hover {
-        background-color: #2563eb;
-      }
-
-      &:disabled {
-        background-color: #93c5fd;
-        cursor: not-allowed;
-      }
+    .mat-form-field-subscript-wrapper {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      overflow: hidden;
+      pointer-events: none;
+      height: 1.25rem;
     }
+
+    .mat-form-field-infix {
+      min-height: 2.5rem;
+    }
+  }
+
+  ::ng-deep .mat-stepper-header {
+    pointer-events: none;
+  }
+
+  ::ng-deep .mat-stepper-label {
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  ::ng-deep .mat-stepper-body {
+    padding-top: 1rem;
   }
 }
 
@@ -137,8 +195,22 @@ input[type="password"] {
 // Responsive design
 @media (max-width: 768px) {
   .login-container {
-    max-width: 90%;
-    padding: 2rem;
+    max-width: 95%;
+    padding: 1.5rem;
+
+    .form-row {
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .step-buttons {
+      justify-content: center;
+
+      button {
+        min-width: 100px;
+        max-width: 150px;
+      }
+    }
   }
 
   .header-logo {
@@ -151,7 +223,18 @@ input[type="password"] {
 @media (max-width: 480px) {
   .login-container {
     max-width: 95%;
-    padding: 1.5rem;
+    padding: 1rem;
+
+    .step-buttons {
+      flex-direction: column;
+      gap: 0.5rem;
+      align-items: stretch;
+
+      button {
+        min-width: unset;
+        max-width: unset;
+      }
+    }
   }
 
   .header-logo {

@@ -16,116 +16,194 @@
       alt="App Logo"
     />
 
-    <form [formGroup]="form" (ngSubmit)="onSubmit()">
-      <div class="form-row">
-        <mat-form-field floatLabel="auto">
-          <mat-label>First Name</mat-label>
-          <input matInput formControlName="firstName" required />
-          <mat-icon matSuffix>person</mat-icon>
-          @if (form.get('firstName')?.hasError('required')) {
-          <mat-error>First name is required</mat-error>
-          }
-        </mat-form-field>
+    <mat-horizontal-stepper [linear]="true" #stepper>
+      <!-- Step 1: Personal Information -->
+      <mat-step [stepControl]="personalInfoForm">
+        <form [formGroup]="personalInfoForm">
+          <ng-template matStepLabel>Personal Information</ng-template>
 
-        <mat-form-field floatLabel="auto">
-          <mat-label>Last Name</mat-label>
-          <input matInput formControlName="lastName" required />
-          <mat-icon matSuffix>person</mat-icon>
-          @if (form.get('lastName')?.hasError('required')) {
-          <mat-error>Last name is required</mat-error>
-          }
-        </mat-form-field>
-      </div>
+          <div class="form-row">
+            <mat-form-field floatLabel="auto">
+              <mat-label>First Name</mat-label>
+              <input matInput formControlName="firstName" required />
+              <mat-icon matSuffix>person</mat-icon>
+              @if (personalInfoForm.get('firstName')?.hasError('required') &&
+              personalInfoForm.get('firstName')?.touched) {
+              <mat-error>First name is required</mat-error>
+              }
+            </mat-form-field>
 
-      <div class="form-row">
-        <mat-form-field floatLabel="auto">
-          <mat-label>Phone No.</mat-label>
-          <input matInput formControlName="phone" required type="tel" />
-          <mat-icon matSuffix>phone</mat-icon>
-          @if (form.get('phone')?.hasError('required')) {
-          <mat-error>Phone no. is required</mat-error>
-          }
-        </mat-form-field>
+            <mat-form-field floatLabel="auto">
+              <mat-label>Last Name</mat-label>
+              <input matInput formControlName="lastName" required />
+              <mat-icon matSuffix>person</mat-icon>
+              @if (personalInfoForm.get('lastName')?.hasError('required') &&
+              personalInfoForm.get('lastName')?.touched) {
+              <mat-error>Last name is required</mat-error>
+              }
+            </mat-form-field>
+          </div>
 
-        <mat-form-field floatLabel="auto">
-          <mat-label>Date of Birth</mat-label>
-          <input
-            matInput
-            [matDatepicker]="picker"
-            formControlName="dob"
-            required
-          />
-          <mat-datepicker-toggle
-            matSuffix
-            [for]="picker"
-          ></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-          @if (form.get('dob')?.hasError('required')) {
-          <mat-error>Date of Birth is required</mat-error>
-          }
-        </mat-form-field>
-      </div>
+          <mat-form-field floatLabel="auto">
+            <mat-label>Date of Birth</mat-label>
+            <input
+              matInput
+              [matDatepicker]="picker"
+              formControlName="dob"
+              required
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            @if (personalInfoForm.get('dob')?.hasError('required') &&
+            personalInfoForm.get('dob')?.touched) {
+            <mat-error>Date of Birth is required</mat-error>
+            }
+          </mat-form-field>
 
-      <mat-form-field floatLabel="auto">
-        <mat-label>Email</mat-label>
-        <input matInput formControlName="email" type="email" required />
-        <mat-icon matSuffix>email</mat-icon>
-        @if (form.get('email')?.hasError('required')) {
-        <mat-error>Email is required</mat-error>
-        } @else if (form.get('email')?.hasError('email')){
-        <mat-error>Email format is invalid</mat-error>
-        }
-      </mat-form-field>
+          <div class="step-buttons">
+            <button
+              mat-flat-button
+              (click)="onStepNext(1)"
+              [disabled]="!personalInfoForm.valid"
+            >
+              Next
+            </button>
+          </div>
+        </form>
+      </mat-step>
 
-      <mat-form-field floatLabel="auto">
-        <mat-label>Password</mat-label>
-        <input matInput formControlName="password" required type="text" />
-        <mat-icon matSuffix>lock</mat-icon>
-        @if (form.get('password')?.hasError('required')) {
-        <mat-error>Password is required</mat-error>
-        }
-      </mat-form-field>
+      <!-- Step 2: Contact & Address Information -->
+      <mat-step [stepControl]="contactAddressForm">
+        <form [formGroup]="contactAddressForm">
+          <ng-template matStepLabel>Contact & Address</ng-template>
 
-      <mat-form-field>
-        <mat-label>Address Line 1</mat-label>
-        <textarea
-          matInput
-          formControlName="addressLine1"
-          rows="3"
-          required
-        ></textarea>
-      </mat-form-field>
+          <div class="form-row">
+            <mat-form-field floatLabel="auto">
+              <mat-label>Phone No.</mat-label>
+              <input matInput formControlName="phone" required type="tel" />
+              <mat-icon matSuffix>phone</mat-icon>
+              @if (contactAddressForm.get('phone')?.hasError('required') &&
+              contactAddressForm.get('phone')?.touched) {
+              <mat-error>Phone no. is required</mat-error>
+              }
+            </mat-form-field>
 
-      <mat-form-field>
-        <mat-label>Address Line 2</mat-label>
-        <textarea matInput formControlName="addressLine2" rows="3"></textarea>
-      </mat-form-field>
+            <mat-form-field floatLabel="auto">
+              <mat-label>Email</mat-label>
+              <input matInput formControlName="email" type="email" required />
+              <mat-icon matSuffix>email</mat-icon>
+              @if (contactAddressForm.get('email')?.hasError('required') &&
+              contactAddressForm.get('email')?.touched) {
+              <mat-error>Email is required</mat-error>
+              } @else if (contactAddressForm.get('email')?.hasError('email') &&
+              contactAddressForm.get('email')?.touched) {
+              <mat-error>Email format is invalid</mat-error>
+              }
+            </mat-form-field>
+          </div>
 
-      <div class="form-row">
-        <mat-form-field>
-          <mat-label>City</mat-label>
-          <mat-select formControlName="city">
-            <mat-option value="India">India</mat-option>
-            <mat-option value="Pakistan">Pakistan</mat-option>
-            <mat-option value="Russia">Russia</mat-option>
-          </mat-select>
-        </mat-form-field>
+          <mat-form-field>
+            <mat-label>Address Line 1</mat-label>
+            <textarea
+              matInput
+              formControlName="addressLine1"
+              rows="3"
+              required
+            ></textarea>
+            @if (contactAddressForm.get('addressLine1')?.hasError('required') &&
+            contactAddressForm.get('addressLine1')?.touched) {
+            <mat-error>Address Line 1 is required</mat-error>
+            }
+          </mat-form-field>
 
-        <mat-form-field floatLabel="auto">
-          <mat-label>Postal Code</mat-label>
-          <input matInput formControlName="postalCode" required type="text" />
-          <mat-icon matSuffix>lock</mat-icon>
-          @if (form.get('postalCode')?.hasError('required')) {
-          <mat-error>PostalCode is required</mat-error>
-          }
-        </mat-form-field>
-      </div>
+          <mat-form-field>
+            <mat-label>Address Line 2</mat-label>
+            <textarea
+              matInput
+              formControlName="addressLine2"
+              rows="3"
+            ></textarea>
+          </mat-form-field>
 
-      <button mat-flat-button type="submit">Sign-up</button>
-      <div class="sub-text">
-        <span>Already have an account?</span>
-        <a>Sign-in</a>
-      </div>
-    </form>
+          <div class="form-row">
+            <mat-form-field>
+              <mat-label>City</mat-label>
+              <mat-select formControlName="city">
+                <mat-option value="India">India</mat-option>
+                <mat-option value="Pakistan">Pakistan</mat-option>
+                <mat-option value="Russia">Russia</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field floatLabel="auto">
+              <mat-label>Postal Code</mat-label>
+              <input
+                matInput
+                formControlName="postalCode"
+                required
+                type="text"
+              />
+              <mat-icon matSuffix>location_on</mat-icon>
+              @if (contactAddressForm.get('postalCode')?.hasError('required') &&
+              contactAddressForm.get('postalCode')?.touched) {
+              <mat-error>Postal Code is required</mat-error>
+              }
+            </mat-form-field>
+          </div>
+
+          <div class="step-buttons">
+            <button mat-flat-button matStepperPrevious>Previous</button>
+            <button
+              mat-flat-button
+              (click)="onStepNext(2)"
+              [disabled]="!contactAddressForm.valid"
+            >
+              Next
+            </button>
+          </div>
+        </form>
+      </mat-step>
+
+      <!-- Step 3: Security Information -->
+      <mat-step [stepControl]="securityForm">
+        <form [formGroup]="securityForm" (ngSubmit)="onSubmit()">
+          <ng-template matStepLabel>Security</ng-template>
+
+          <mat-form-field floatLabel="auto">
+            <mat-label>Password</mat-label>
+            <input
+              matInput
+              formControlName="password"
+              required
+              type="password"
+            />
+            <mat-icon matSuffix>lock</mat-icon>
+            @if (securityForm.get('password')?.hasError('required') &&
+            securityForm.get('password')?.touched) {
+            <mat-error>Password is required</mat-error>
+            }
+          </mat-form-field>
+
+          <div class="step-buttons">
+            <button mat-flat-button matStepperPrevious>Previous</button>
+            <button
+              mat-flat-button
+              type="submit"
+              [disabled]="!isAllFormsValid()"
+            >
+              Sign-up
+            </button>
+          </div>
+        </form>
+      </mat-step>
+    </mat-horizontal-stepper>
+
+    <div class="sub-text">
+      <span>Already have an account?</span>
+      <a (click)="goToLogin()">Sign-in</a>
+    </div>
   </div>
 </div>
