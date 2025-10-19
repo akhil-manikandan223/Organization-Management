@@ -196,22 +196,6 @@
         ::ng-deep .mat-mdc-tab-header {
           background: #f8f9fb;
           border-bottom: 1px solid #e0e0e0;
-  
-          .mat-mdc-tab {
-            color: #666;
-            font-weight: 500;
-            font-size: 14px;
-            min-width: 120px;
-  
-            &.mdc-tab--active {
-              color: #2196f3;
-            }
-          }
-  
-          .mdc-tab-indicator__content {
-            background-color: #2196f3;
-            height: 3px;
-          }
         }
   
         ::ng-deep .mat-mdc-tab-body-wrapper {

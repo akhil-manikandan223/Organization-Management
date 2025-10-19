@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MaterialModule } from '../../material.module';
 import { CommonModule } from '@angular/common';
@@ -32,7 +32,8 @@ export class ProfileManagement {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private userProfileService: UserProfileService
+    private userProfileService: UserProfileService,
+    private cdr: ChangeDetectorRef
   ) {
     this.initializeForm();
   }
@@ -103,12 +104,13 @@ export class ProfileManagement {
           dateOfBirth: user.dateOfBirth ? new Date(user.dateOfBirth) : null,
           hireDate: user.joiningDate ? new Date(user.joiningDate) : null // Note: using joiningDate from your data
         };
-
+        this.cdr.detectChanges();
         this.userForm.patchValue(userData);
         this.loading = false;
       },
       error: (error) => {
         console.error('Error loading user data:', error);
+        this.cdr.detectChanges();
         this.loading = false;
       }
     });
