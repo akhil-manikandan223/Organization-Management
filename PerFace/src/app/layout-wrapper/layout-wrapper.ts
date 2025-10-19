@@ -1,5 +1,6 @@
 import { Component, computed, effect, signal } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 import { MaterialModule } from '../material.module';
 import { CustomSidenav } from '../custom-sidenav/custom-sidenav';
 import { SnackbarNotification } from '../shared/snackbar-notification';
@@ -11,13 +12,14 @@ import {
 
 @Component({
   selector: 'app-layout-wrapper',
-  imports: [RouterOutlet, MaterialModule, CustomSidenav],
+  imports: [RouterOutlet, MaterialModule, CustomSidenav, FormsModule],
   templateUrl: './layout-wrapper.html',
   styleUrl: './layout-wrapper.scss',
 })
 export class LayoutWrapper {
   collapsed = signal(false);
   darkMode = signal(false);
+  searchQuery = signal('');
 
   setDarkMode = effect(() => {
     document.documentElement.classList.toggle('dark', this.darkMode());
@@ -54,5 +56,11 @@ export class LayoutWrapper {
         this.logout();
       }
     });
+  }
+
+  onSearch(event: Event) {
+    const target = event.target as HTMLInputElement;
+    this.searchQuery.set(target.value);
+    console.log('Search query:', this.searchQuery());
   }
 }

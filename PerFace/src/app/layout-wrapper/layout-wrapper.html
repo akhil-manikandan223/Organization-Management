@@ -16,6 +16,17 @@
   />
   }
   <span class="toolbar-spacer"></span>
+  <div class="search-container">
+    <mat-form-field appearance="outline" class="search-field">
+      <mat-label>Search</mat-label>
+      <input matInput 
+             [ngModel]="searchQuery()" 
+             (ngModelChange)="searchQuery.set($event)"
+             (input)="onSearch($event)">
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+  </div>
+  <span class="toolbar-spacer"></span>
   <button mat-icon-button aria-label="Search">
     <mat-icon>search</mat-icon>
   </button>
