@@ -135,6 +135,88 @@ namespace PerBrain.Controllers.UserProfiles
             }
         }
 
+        [HttpGet("GetUserById/{id}")]
+        public IActionResult GetUserById(int id)
+        {
+            try
+            {
+                var user = _context.UserProfiles.SingleOrDefault(m => m.UserId == id);
+
+                if (user == null)
+                {
+                    return NotFound($"User with ID {id} not found");
+                }
+
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error retrieving user: {ex.Message}");
+            }
+        }
+
+
+        [HttpPut("UpdateUser/{id}")]
+        public IActionResult UpdateUser(int id, UserProfile obj)
+        {
+            try
+            {
+                var existingUser = _context.UserProfiles.SingleOrDefault(m => m.UserId == id);
+
+                if (existingUser == null)
+                {
+                    return NotFound($"User with ID {id} not found");
+                }
+
+                // Check if email is being changed and if new email already exists
+                if (existingUser.Email != obj.Email)
+                {
+                    var userWithNewEmail = _context.UserProfiles
+                        .SingleOrDefault(m => m.Email == obj.Email && m.UserId != id);
+
+                    if (userWithNewEmail != null)
+                    {
+                        return BadRequest("Email is already registered for another user.");
+                    }
+                }
+
+                // Update user properties
+                existingUser.FirstName = obj.FirstName;
+                existingUser.LastName = obj.LastName;
+                existingUser.Email = obj.Email;
+                existingUser.Phone = obj.Phone;
+                existingUser.AlternatePhone = obj.AlternatePhone;
+                existingUser.DateOfBirth = obj.DateOfBirth;
+                existingUser.Gender = obj.Gender;
+                existingUser.AddressLine1 = obj.AddressLine1;
+                existingUser.AddressLine2 = obj.AddressLine2;
+                existingUser.City = obj.City;
+                existingUser.State = obj.State;
+                existingUser.Country = obj.Country;
+                existingUser.PostalCode = obj.PostalCode;
+                existingUser.Department = obj.Department;
+                existingUser.JobTitle = obj.JobTitle;
+                existingUser.EmployeeId = obj.EmployeeId;
+                existingUser.JoiningDate = obj.JoiningDate;
+                existingUser.Manager = obj.Manager;
+                existingUser.EmergencyContact = obj.EmergencyContact;
+                existingUser.EmergencyContactPhone = obj.EmergencyContactPhone;
+                existingUser.Notes = obj.Notes;
+                existingUser.IsActive = obj.IsActive;
+
+                _context.SaveChanges();
+
+                return Ok(new
+                {
+                    message = "User updated successfully",
+                    user = existingUser
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error updating user: {ex.Message}");
+            }
+        }
 
     }
 }

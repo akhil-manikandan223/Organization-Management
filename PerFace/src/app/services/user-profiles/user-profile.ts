@@ -17,13 +17,29 @@ export class UserProfileService {
     return this.http.get<UserProfile[]>(url);
   }
 
+  createUser(userProfile: UserProfile): Observable<UserProfile> {
+    const url = `${this.baseUrl}UserProfile/CreateNewUser`;
+    return this.http.post<UserProfile>(url, userProfile);
+  }
+
   deleteUserById(id: number): Observable<any> {
     const url = `${this.baseUrl}UserProfile/DeleteUser/${id}`;
     return this.http.delete<any>(url);
   }
 
+  updateUser(userProfile: UserProfile): Observable<any> {
+    const url = `${this.baseUrl}UserProfile/UpdateUser/${userProfile.userId}`;
+    return this.http.put<any>(url, userProfile);
+  }
+
   deleteMultipleUsers(userIds: number[]): Observable<any> {
     const url = `${this.baseUrl}UserProfile/DeleteMultipleUsers`;
     return this.http.delete<any>(url, { body: userIds });
+  }
+
+  // ✅ CORRECT - Fixed version
+  getUserById(id: number): Observable<UserProfile> {
+    const url = `${this.baseUrl}UserProfile/GetUserById/${id}`;
+    return this.http.get<UserProfile>(url);
   }
 }

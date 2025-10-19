@@ -1,1 +1,314 @@
-<p>profile-management works!</p>
+<!-- user-profile-edit.component.html -->
+<div class="profile-edit-container">
+    <!-- Header -->
+    <div class="header-section">
+      <button mat-icon-button (click)="onCancel()" class="back-button">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <h2>{{ isEditMode ? 'Edit User Profile' : 'Add New User' }}</h2>
+    </div>
+  
+    <!-- Loading Spinner -->
+    @if(loading) {
+      <div class="loading-container">
+        <app-loading-screen-5></app-loading-screen-5>
+      </div>
+    }
+  
+    <!-- Main Content Layout -->
+    @if(!loading) {
+      <div class="main-layout">
+        
+        <!-- Left Sidebar - User Profile -->
+        <div class="profile-sidebar">
+          <div class="profile-card">
+            <!-- Avatar Section -->
+            <div class="avatar-section">
+              <div class="avatar-container">
+                <img src="assets/images/sidenav-pro-pic.jpg" alt="Profile Picture" class="avatar-image">
+                <div class="avatar-badge">
+                  <mat-icon>verified</mat-icon>
+                </div>
+              </div>
+              <button mat-icon-button class="avatar-edit-btn" (click)="changeProfilePicture()">
+                <mat-icon>camera_alt</mat-icon>
+              </button>
+            </div>
+  
+            <!-- User Info -->
+            <div class="user-info">
+              <h3 class="user-name">{{ getFullName() }}</h3>
+              <p class="user-title">{{ userForm.get('jobTitle')?.value || 'Employee' }}</p>
+              <p class="user-department">{{ userForm.get('department')?.value || 'No Department' }}</p>
+            </div>
+  
+            <!-- User Stats -->
+            <div class="user-stats">
+              <div class="stat-item">
+                <div class="stat-number">{{ getYearsOfService() }}</div>
+                <div class="stat-label">Years of Service</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-number">{{ userForm.get('isActive')?.value ? 'Active' : 'Inactive' }}</div>
+                <div class="stat-label">Status</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-number">{{ userForm.get('employeeId')?.value || 'N/A' }}</div>
+                <div class="stat-label">Employee ID</div>
+              </div>
+            </div>
+  
+            <!-- Quick Actions -->
+            <div class="quick-actions">
+              <button mat-stroked-button class="action-btn" (click)="viewPublicProfile()">
+                <mat-icon>visibility</mat-icon>
+                View Public Profile
+              </button>
+              <button mat-stroked-button class="action-btn" (click)="resetPassword()">
+                <mat-icon>lock_reset</mat-icon>
+                Reset Password
+              </button>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Right Content - Tabbed Form -->
+        <div class="form-content">
+          <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+            <mat-tab-group class="profile-tabs" animationDuration="300ms">
+              
+              <!-- Basic Information Tab -->
+              <mat-tab label="Basic Information">
+                <div class="tab-content">
+                  <div class="form-section">
+                    <h3>Personal Details</h3>
+                    <div class="form-row">
+                      <mat-form-field appearance="outline">
+                        <mat-label>First Name</mat-label>
+                        <input matInput formControlName="firstName" required>
+                        @if(hasError('firstName', 'required')) {
+                          <mat-error>First Name is required</mat-error>
+                        }
+                      </mat-form-field>
+  
+                      <mat-form-field appearance="outline">
+                        <mat-label>Middle Name</mat-label>
+                        <input matInput formControlName="middleName">
+                      </mat-form-field>
+  
+                      <mat-form-field appearance="outline">
+                        <mat-label>Last Name</mat-label>
+                        <input matInput formControlName="lastName" required>
+                        @if(hasError('lastName', 'required')) {
+                          <mat-error>Last Name is required</mat-error>
+                        }
+                      </mat-form-field>
+                    </div>
+  
+                    <div class="form-row">
+                      <mat-form-field appearance="outline">
+                        <mat-label>Date of Birth</mat-label>
+                        <input matInput [matDatepicker]="dobPicker" formControlName="dateOfBirth" readonly>
+                        <mat-datepicker-toggle matIconSuffix [for]="dobPicker"></mat-datepicker-toggle>
+                        <mat-datepicker #dobPicker></mat-datepicker>
+                      </mat-form-field>
+  
+                      <mat-form-field appearance="outline">
+                        <mat-label>Gender</mat-label>
+                        <mat-select formControlName="gender">
+                          <mat-option *ngFor="let option of genderOptions" [value]="option.value">
+                            {{ option.label }}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+  
+                      <mat-form-field appearance="outline">
+                        <mat-label>Employee ID</mat-label>
+                        <input matInput formControlName="employeeId">
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+              </mat-tab>
+  
+              <!-- Contact Information Tab -->
+              <mat-tab label="Contact Info">
+                <div class="tab-content">
+                  <div class="form-section">
+                    <h3>Contact Details</h3>
+                    <div class="form-row">
+                      <mat-form-field appearance="outline">
+                        <mat-label>Email</mat-label>
+                        <input matInput formControlName="email" type="email" required>
+                        <mat-icon matSuffix>email</mat-icon>
+                        @if(hasError('email', 'required')) {
+                          <mat-error>Email is required</mat-error>
+                        } @else if(hasError('email', 'email')) {
+                          <mat-error>Please enter a valid email</mat-error>
+                        }
+                      </mat-form-field>
+  
+                      <mat-form-field appearance="outline">
+                        <mat-label>Phone</mat-label>
+                        <input matInput formControlName="phone" type="tel" required>
+                        <mat-icon matSuffix>phone</mat-icon>
+                        @if(hasError('phone', 'required')) {
+                          <mat-error>Phone is required</mat-error>
+                        }
+                      </mat-form-field>
+  
+                      <mat-form-field appearance="outline">
+                        <mat-label>Alternate Phone</mat-label>
+                        <input matInput formControlName="alternatePhone" type="tel">
+                        <mat-icon matSuffix>phone</mat-icon>
+                      </mat-form-field>
+                    </div>
+                  </div>
+  
+                  <div class="form-section">
+                    <h3>Emergency Contact</h3>
+                    <div class="form-row">
+                      <mat-form-field appearance="outline">
+                        <mat-label>Emergency Contact Name</mat-label>
+                        <input matInput formControlName="emergencyContact">
+                      </mat-form-field>
+  
+                      <mat-form-field appearance="outline">
+                        <mat-label>Emergency Contact Phone</mat-label>
+                        <input matInput formControlName="emergencyContactPhone" type="tel">
+                        <mat-icon matSuffix>phone</mat-icon>
+                      </mat-form-field>
+  
+                      <div class="spacer-field"></div>
+                    </div>
+                  </div>
+                </div>
+              </mat-tab>
+  
+              <!-- Address Information Tab -->
+              <mat-tab label="Address">
+                <div class="tab-content">
+                  <div class="form-section">
+                    <h3>Address Details</h3>
+                    <div class="form-row">
+                      <mat-form-field appearance="outline">
+                        <mat-label>Address Line 1</mat-label>
+                        <input matInput formControlName="addressLine1">
+                      </mat-form-field>
+  
+                      <mat-form-field appearance="outline">
+                        <mat-label>Address Line 2</mat-label>
+                        <input matInput formControlName="addressLine2">
+                      </mat-form-field>
+  
+                      <mat-form-field appearance="outline">
+                        <mat-label>City</mat-label>
+                        <input matInput formControlName="city">
+                      </mat-form-field>
+                    </div>
+  
+                    <div class="form-row">
+                      <mat-form-field appearance="outline">
+                        <mat-label>State</mat-label>
+                        <input matInput formControlName="state">
+                      </mat-form-field>
+  
+                      <mat-form-field appearance="outline">
+                        <mat-label>Country</mat-label>
+                        <input matInput formControlName="country">
+                      </mat-form-field>
+  
+                      <mat-form-field appearance="outline">
+                        <mat-label>Postal Code</mat-label>
+                        <input matInput formControlName="postalCode">
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+              </mat-tab>
+  
+              <!-- Employment Information Tab -->
+              <mat-tab label="Employment">
+                <div class="tab-content">
+                  <div class="form-section">
+                    <h3>Job Details</h3>
+                    <div class="form-row">
+                      <mat-form-field appearance="outline">
+                        <mat-label>Department</mat-label>
+                        <input matInput formControlName="department">
+                      </mat-form-field>
+  
+                      <mat-form-field appearance="outline">
+                        <mat-label>Job Title</mat-label>
+                        <input matInput formControlName="jobTitle">
+                      </mat-form-field>
+  
+                      <mat-form-field appearance="outline">
+                        <mat-label>Manager</mat-label>
+                        <input matInput formControlName="manager">
+                      </mat-form-field>
+                    </div>
+  
+                    <div class="form-row">
+                      <mat-form-field appearance="outline">
+                        <mat-label>Hire Date</mat-label>
+                        <input matInput [matDatepicker]="hirePicker" formControlName="hireDate" readonly>
+                        <mat-datepicker-toggle matIconSuffix [for]="hirePicker"></mat-datepicker-toggle>
+                        <mat-datepicker #hirePicker></mat-datepicker>
+                      </mat-form-field>
+  
+                      <mat-form-field appearance="outline">
+                        <mat-label>Salary</mat-label>
+                        <input matInput formControlName="salary" type="number" min="0">
+                        <span matTextPrefix>$&nbsp;</span>
+                      </mat-form-field>
+  
+                      <div class="checkbox-field">
+                        <mat-checkbox formControlName="isActive">
+                          Active Employee
+                        </mat-checkbox>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </mat-tab>
+  
+              <!-- Additional Information Tab -->
+              <mat-tab label="Additional">
+                <div class="tab-content">
+                  <div class="form-section">
+                    <h3>Additional Information</h3>
+                    <div class="form-row full-width">
+                      <mat-form-field appearance="outline" class="full-width">
+                        <mat-label>Notes</mat-label>
+                        <textarea matInput formControlName="notes" rows="4" cdkTextareaAutosize></textarea>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+              </mat-tab>
+  
+            </mat-tab-group>
+  
+            <!-- Common Save Button - Fixed at bottom -->
+            <div class="form-actions">
+              <button type="button" mat-stroked-button (click)="onCancel()" [disabled]="loading">
+                <mat-icon>close</mat-icon>
+                Cancel
+              </button>
+              <button type="submit" mat-raised-button color="primary" [disabled]="loading || userForm.invalid">
+                @if(loading) {
+                  <mat-spinner diameter="20"></mat-spinner>
+                  <span>Saving...</span>
+                } @else {
+                  <!-- <mat-icon>save</mat-icon> -->
+                  <span>{{ isEditMode ? 'Update User' : 'Create User' }}</span>
+                }
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    }
+  </div>
+  
