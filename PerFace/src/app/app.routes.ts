@@ -82,13 +82,6 @@ export const routes: Routes = [
             (m) => m.DocumentsManagementModule
           ),
       },
-      {
-        path: 'general-master',
-        loadChildren: () =>
-          import('./general-master/general-master-module').then(
-            (m) => m.GeneralMasterModule
-          ),
-      },
     ],
   },
   { path: '**', redirectTo: '' },

@@ -1,0 +1,35 @@
+.main-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    height: 88vh;
+
+    .sub-menu-container {
+        width: 20%;
+        padding: 16px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .main-content-container {
+        width: 80%;
+        padding: 16px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+}
+
+.selected-menu-item {
+    border-color: blue;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.menu-arrow {
+    margin-left: auto;
+}
+
+mat-nav-list {
+    padding-top: 0;
+}
+
+mat-list-item {
+    height: 48px !important;
+}

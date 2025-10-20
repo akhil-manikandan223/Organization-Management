@@ -5,6 +5,7 @@ import { Countries } from './countries/countries';
 import { StatesProvinces } from './states-provinces/states-provinces';
 
 const routes: Routes = [
+  { path: '', redirectTo: 'country', pathMatch: 'full' }, // Default route
   { path: 'country', component: Countries, data: { title: 'Country' } },
   { path: 'states-provinces', component: StatesProvinces, data: { title: 'States & Provinces' } },
 ];
