@@ -1,1 +1,16 @@
-<p>departments works!</p>
+@if (allDepartments.length && columns.length) {
+<system-ui-table [columns]="columns" [data]="allDepartments" [config]="tableConfig"
+    (dataChanged)="onDataChanged($event)">
+</system-ui-table>
+} @else {
+<div class="spinner-container">
+    <app-loading-screen-5></app-loading-screen-5>
+</div>
+}
+
+<ng-template #isActiveStateTemplate let-row>
+    <div class="state-base" [ngClass]="row.isActive ? 'active-state' : 'inactive-state'">
+        <mat-icon>{{ row.isActive ? "check_circle" : "cancel" }}</mat-icon>
+        <span>{{ row.isActive ? "Active" : "Inactive" }}</span>
+    </div>
+</ng-template>

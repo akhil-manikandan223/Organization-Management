@@ -1,12 +1,12 @@
 .profile-edit-container {
    // min-height: 100vh;
-    background: #f5f7fa;
+    // background: #f5f7fa;
   
     .header-section {
       display: flex;
       align-items: center;
       margin-bottom: 20px;
-      background: white;
+      // background: white;
       padding: 12px 16px;
       border-radius: 8px;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -27,7 +27,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      background: white;
+      // background: white;
       border-radius: 8px;
     }
   
@@ -40,7 +40,7 @@
   
     // Left Sidebar Styles
     .profile-sidebar {
-      background: white;
+      // background: white;
       border-radius: 12px;
       padding: 24px;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
@@ -82,7 +82,7 @@
               border: 3px solid white;
   
               mat-icon {
-                font-size: 16px;
+                font-size: 12px;
                 color: white;
               }
             }
@@ -184,7 +184,7 @@
   
     // Right Form Content Styles
     .form-content {
-      background: white;
+      // background: white;
       border-radius: 12px;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
       overflow: hidden;
@@ -194,7 +194,7 @@
         // height: 100%;
   
         ::ng-deep .mat-mdc-tab-header {
-          background: #f8f9fb;
+          // background: #f8f9fb;
           border-bottom: 1px solid #e0e0e0;
         }
   
@@ -259,7 +259,7 @@
       .form-actions {
         position: sticky;
         bottom: 0;
-        background: white;
+        // background: white;
         padding: 10px 16px;
         border-top: 1px solid #e0e0e0;
         display: flex;

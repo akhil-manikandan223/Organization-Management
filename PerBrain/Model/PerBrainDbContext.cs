@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PerBrain.Model.Countries;
+using PerBrain.Model.Departments;
 using PerBrain.Model.Permissions;
 using PerBrain.Model.RolePermissions;
 using PerBrain.Model.Roles;
@@ -20,6 +21,7 @@ namespace PerBrain.Model
         public DbSet<Permission> Permissions { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
         public DbSet<RolePermission> RolePermissions { get; set; }
+        public DbSet<Department> Departments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
