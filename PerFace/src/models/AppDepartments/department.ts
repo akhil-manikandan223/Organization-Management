@@ -1,5 +1,5 @@
 export interface Department {
-    departmentId: number;
-    name: string;
-    isActive?: boolean;
-  }
+  departmentId: number;
+  name: string;
+  isActive?: boolean;
+}

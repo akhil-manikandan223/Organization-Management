@@ -31,4 +31,9 @@ export class DepartmentService {
     const url = `${this.baseUrl}Department/DeleteMultipleDepartments`;
     return this.http.delete<any>(url, { body: departmentIds });
   }
+
+  getDepartmentById(id: number): Observable<Department> {
+    const url = `${this.baseUrl}Department/GetDepartmentById/${id}`;
+    return this.http.get<Department>(url);
+  }
 }
